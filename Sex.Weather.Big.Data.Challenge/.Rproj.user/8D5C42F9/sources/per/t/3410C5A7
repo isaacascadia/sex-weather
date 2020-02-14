@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1581620055910.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "697025556",
+    "id" : "3410C5A7",
+    "lastKnownWriteTime" : 1581620098,
+    "last_content_update" : 1581620098286,
+    "path" : "~/SCHOOL/B6 Data Analysis in R/3 Big Data  Challenge/sex-weather/Isaac.Playing.Around.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "5,0",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
