@@ -1,0 +1,592 @@
+# 
+# 
+# ISAAC'S CODE LIBRARY
+# 
+# Two sections: GENERAL and VISUALS
+# 
+# Please enjoy!
+# 
+# 
+################################# GENERAL ####################################
+# 
+# This section contains tools related to data management and manipulation, 
+# # tools for managing vectors, data frames, and tables, 
+# # tools for statistical tests and distributions, 
+# # and function making (including a couple homemade functions)
+# 
+# 
+# Table of Contents
+# 1 Data Types/Indexing/Input
+# 2 Basics
+# 3 Vectors
+# 4 Tables
+# 5 Data Frames
+# 6 Distributions
+# 7 Tests
+# 8 Function Making
+# 
+# 
+######################## 1 Data Types/Indexing/Input ##########################
+
+# Vector - list of elements
+# Data frame - list of vectors
+# List - list of data frames
+
+# indexing
+list.files()        # show all the files in working directory
+getwd()             # location of working directory
+head(mammals)       # show first first few rows of every column
+nrow()              # how many rows
+ncol()              # how many columns
+mammals[3, 3]       # [y, x] OR [row, column] location 
+mammals$order[3]    # row within a named column
+mammals$order[1:69] # call all elements within a range
+length(mammals$order[mammals$order == "Artiodactyla"]) # How many elements
+
+
+# read.csv: maintain character variables rather than convert  to factors, 
+# strip leading/trailing spaces, 
+# and select what defines an empty/missing field (not empty words)
+setwd("C:/Users/isaac/Documents/SCHOOL/B6 Data Analysis in R/Problem Sets")
+mydata <- read.csv("filename.csv", 
+                   stringsAsFactors = FALSE, 
+                   strip.white = TRUE, 
+                   na.strings = c(NA, ""))
+
+
+
+############################ 2 Basics #######################################
+
+
+# 1. Number transformations
+sqrt(10)
+log(2)
+log10(10)
+5^10
+
+# 2. Num strings w/ assignment operator
+x <- 3
+
+# 3. Char strings (single or double quotes needed)
+z <- "Wake up Neo"
+
+# 4. See names of all objects in environment
+ls()
+
+# 5. Manipulating variables
+x <- 6
+y <- 11
+x * y
+z <- x * y
+z
+print(z)
+
+# 6. TRUE or FALSE
+# == "equal to"
+2 * 78 == 8000
+
+# <= "less than or equal to"
+6 <= 6
+
+# < "greater than"
+"A" > "a"
+
+# != "not equal to"
+"Yo" != "yo"
+
+
+# grep(): "which elements of an object contain a given input, eg "letters"?
+# value Boolean arg - if FALSE, indices of matches returned
+# if TRUE, vector containing elements themselves returned
+# ignore.case Boolean arg - case sensitivity
+grep("char string", x = searched.vector, value = TRUE, ignore.case = TRUE)
+
+
+
+
+
+#################### 3 Vectors #########################################
+
+# define parameters for reference throughout script
+col.isaac <- c("darkgreen", "firebrick", "purple")
+plot(x.variable, y.variable, col = col.isaac[1])
+points(5, 1.1, col = col.isaac[2])
+
+
+
+# Assigning numbers to a vector
+x <- c(10, -47, 22, 86, 32, -69, 11, 14, -7, -472)
+x
+print(x)
+is.vector(x) 
+
+
+# Indicate subset of vector
+x[5]
+x[1:3]
+#x[1:3] is a shortcut for concatenate function for consecutive elements
+x[c(2,4,9)]
+x[c(3,6)]
+
+
+# Integer results of functions can be used as vector indices
+# Number of elements in a vector:
+length(x)
+
+
+# Function result as an indicator 
+x[length(x)]
+
+
+# Logical operators as indicators
+x < 0
+x[x < 0]
+which(x < 0)
+x[which(x < 0)]
+
+
+# Indicators can be used to denote specific vector elements to change
+x[5] <- 0
+x[length(x)] <- 42
+x[length(x)]
+x[c(2,6,10)] <- 2
+x[c(2,6,10)] <- x[c(2,6,10)]*2
+
+
+# Missing values are indicated by NA
+x[2] <- NA
+x[2]
+
+
+# Array calculator
+y <- c(11, 2, 23, -22, -46, 88, 26, -29, -92, -100)
+z <- x * y
+z <- y - 2 * x
+
+
+# Assigning only the abs. values of x that are greater or less than abs. values of y
+z <- x[abs(x) < abs(y)]
+z <- x[abs(x) > abs(y)]
+
+
+# Transform all values in vector, assign to new vector
+z <-2 * x
+
+
+# Making a data frame from 2 vectors of equal length and deleting data-frame'd vectors
+mydata <- data.frame(x = x, y = y,
+                     stringsAsFactors = FALSE)
+
+
+# Show names of any object (eg vectors in a data frame)
+names(mydata)
+
+
+# remove objects from a specific environment
+rm(dataframe.example, vector.example, vector.list.obj.to.rm)
+
+
+# Accessing vectors within data frame
+length(mydata)
+mydata$x
+mydata$y
+
+
+# Sorting elements within a vector (decr. or incr.)
+sort(vector, decreasing = TRUE)
+
+
+# rep() replicate elements of vectors and lists
+rep(object, number.of.repetitions)
+
+
+#Frequency table for observations that contain a certain value
+table(mydata$Variable[mydata$Variable == "Value"])
+
+
+# seq() generates a regular sequence
+seq(from = x, to = y, by = z)
+
+seq(0,1,0.1)  # example
+
+
+# rev() reverses order of a vector
+rev(some.order)
+
+
+# Ignore missing values 
+
+# na.rm - function argument
+mean(vector, na.rm = TRUE)
+
+# na.omit - function
+na.omit(vector)
+
+# !is.na - used in indexing
+vector[!is.na]
+
+
+# unique() shows the unique elements/rows within a vector, 
+# data frame, or array
+unique(x)
+
+
+######################## 4 Tables #########################
+
+# table function - frequency table
+table(mydata$Ecomorph)
+
+# cbind() - join strings of equal length (or else repeats) as matrix columns
+cmatrix <- cbind(c(8, 9, 43), c(6, 12, 2), c(14, 72, 80))
+
+# rbind() - like cbind(), but with rows
+rmatrix <- rbind(c(8, 9, 43), c(6, 12, 2), c(14, 72, 80))
+
+
+
+# Contingency table with sum row/column
+#create contingency table (useNA determines inclusion of NA values)
+cont.table <- table(mammals$status, mammals$continent, useNA = "ifany")
+
+# add margins
+# margin argument - dimensions to form margins in, ordered
+# FUN arg - function(s) to apply to each row or column
+# quiet arg - suppresses message telling order of margin computation
+addmargins(contable, margin = c(1, 2), FUN = sum, quiet = TRUE)
+?addmargins
+
+
+# 6. Table of medians of numerical variables for each categorical value. 
+# Create new vector with concatenated list of medians by status, then make table
+med.mass <- c(
+  median(mammals$log.mass[mammals$status == "extinct"], na.rm = TRUE),
+  median(mammals$log.mass[mammals$status == "extant"], na.rm = TRUE),
+  median(mammals$log.mass[mammals$status == "historical"], na.rm = TRUE),
+  median(mammals$log.mass[mammals$status == "introduction"], na.rm = TRUE))
+table(med.mass)
+
+# Make a table with a concatenated list of medians by status
+table(c(
+  median(mammals$log.mass[mammals$status == "extinct"], na.rm = TRUE),
+  median(mammals$log.mass[mammals$status == "extant"], na.rm = TRUE),
+  median(mammals$log.mass[mammals$status == "historical"], na.rm = TRUE),
+  median(mammals$log.mass[mammals$status == "introduction"], na.rm = TRUE)))
+
+
+# tapply() applies a function (median) over an indexed group of values (status)
+tapply(mammals$log.mass, INDEX = mammals$status, FUN = median, na.rm = TRUE)
+
+
+# t() - transpose table rows and columns
+t(table(some.matrix))  # table transposed with t()
+
+
+
+
+###################### 5 Data Frames ################################
+
+# making a data frame - colname = values, comma delineated
+crashes.chi <- data.frame("observed" = c(vert.sum, twenty.sum, forty.sum), 
+                          "expected" = c(exp, exp, exp), 
+                          "chi-squared" = c(((vert.sum-exp)^2/exp), 
+                                            ((twenty.sum-exp)^2/exp), 
+                                            ((forty.sum-exp)^2/exp)),
+                          stringsAsFactors = FALSE)
+
+
+# str command - summary of data frame contents
+str(mydata)
+is.factor(mydata$Variable)
+
+
+# class command - data type of object
+class(mydata)
+class(mydata$Variable)
+
+
+# head and tail commands - first or last few lines of data frame
+head(mydata)
+head(mydata$Variable)
+tail(mydata)
+
+
+# levels command - display factor levels
+levels(mydata$Variable)
+
+
+# which() command - identify row 
+which(mydata$Variable == "Level_Name")
+
+
+# Aggregate erroneous groups (trailing space) using assignment
+mydata$Variable[mydata$Variable == "Level_Name "] <- "Level_Name"
+
+
+# droplevels command - delete unused  levels of a factor variable
+levels(mydata$Variable)
+mydata$Variable <- droplevels(mydata$Variable)
+
+
+# colnames() - referencing/changing column names in data frame
+# more values indicates subsequent column names
+# do.NULL argument - Boolean that creates anmes if FALSE and names NULL
+colnames(dataframe) <- c("angle", "other.name")   # renaming variable name
+
+# row.names() - like colnames, but for rows
+row.names()
+
+
+# aggregate() - applies function to a list() of grouping elements in an object
+# x = object, by = list() of elements that define subsets of the object
+# FUN = function (eg sd, mean, var)
+aggregate(x = color$skinColor, by = list(color$species == "kokanee", 
+                                         color$species == "sockeye"), 
+          FUN = var)
+
+
+
+###################### 6 Distributions ##############################
+
+# rnorm() - generates random normal distribution with n, mean, sd
+rnorm(n, mean = x, sd = y)
+
+
+# qnorm() returns z-score (number of sd) based on quantile
+# arguments: p (quantile), sd, lower.tail
+qnorm(p = 0.95, sd = 1, lower.tail = TRUE) # finding z score based on percentile
+
+
+# pnorm() - returns p value for z-score, based on n, mean, and sd
+# lower.tail Boolean argument defines tail probability area returned
+pnorm(1.1912, mean = 0, sd = 1, lower.tail = FALSE)  # determining P-value from z score
+
+
+
+# pt() - returns t-distribution probability for a given quantile (t-value)
+# q = quantile, df = degrees of freedom, lower.tail = tail selection Boolean
+pt(q = 1, df = 3, lower.tail = TRUE)
+
+
+###################### 7 Tests ##############################################
+
+# binom.test() Exact binomial test of null hypothesis
+# x = number of successes, n = sample size, alternative defines Ha
+# conf.level defines limits for confidence interval
+binom.test(x = 20, n = 35, p = 0.5, 
+           alternative = c("two.sided", "less", "greater"),
+           conf.level = 0.95)
+
+
+# Chi-squared tests (goodness-of-fit and contingency)
+# x = counts for goodness-of-fit, y = more counts for contingency test,
+# p = probabilities for each entry in x (equal if no value given),
+# contingency table is done by random sampling from set of all cont table
+chisq.test(x = c(some.numbers),
+           y = c(contingency.numbers), p = c(p1, p2, p3))
+
+# can also do chisq.test() based on a contingency matrix
+cont.table <- cbind(c(8, 9), c(6, 12))
+chisq.test(cont.table)
+class(cont.table)
+
+
+
+
+# Chi-squared critical value based on p and df
+qchisq(p = 0.95, df = x)
+
+
+# t.test() - performs one- or two-sample t-test 
+# x = numeric string for one-sample, y = second num string for two-sample
+# var.equal argument - TRUE > pooled var, FALSE > Welch df approximation
+t.test(x = c(4,5,2,3), y = c(8,5,7,4), paired = TRUE, 
+       var.equal = TRUE)
+
+# t-test critical value - lower.tail Boolean selects tail P area
+qt(p, df, lower.tail = TRUE)
+
+
+
+
+
+######################## 8 Function Making ###################################
+
+# function() is used to create functions - ordered aggregations of code 
+# that can be easily applied to any object by referencing the function name
+
+# how to make a function
+
+dirty.laundry <- c(3,6,7,5,3,8)
+mean(dirty.laundry)
+## [1] 5.333333
+
+fexample <- function(laundry.into.machine){         # function definition
+  
+  print("your laundry is ready")                    # time to get folding
+  print(laundry.into.machine)                       # print input
+  sum.temp <- sum(laundry.into.machine)             # calculate sum of values
+  length.val.temp <- length (laundry.into.machine)  # calculate sample size
+  new.mean <- sum.temp/length.val.temp              # calculate the mean
+  return(new.mean)                                  # print final output
+}
+
+fexample(dirty.laundry)                             # testing function-ality
+
+
+# mode function - returns mode for any string (eg laundry)
+
+dirty.laundry <- c(3,6,7,5,3,8)
+
+fmode <- function(laundry){
+  
+  # returns mode and frequency of mode
+  mode <- table(laundry)[table(laundry) == max(table(laundry))] 
+  print("mode, then frequency")
+  return(mode)
+}
+
+fmode(dirty.laundry)
+
+
+
+
+############################ VISUALS #########################################
+# 
+# This section contains tools related to visually presenting data (eg graphs)
+# 
+# Table of Contents
+# 1 Histogram
+# 2 Bar Plot
+# 3 Quantile-Quantile Plot
+# 4 Box Plot 
+# 5 Strip Chart
+# 6 Graph Tools 
+# 7 Graph arguments
+# 
+# 
+######################## 1 Histogram ####################################
+
+# Histogram
+hist(vectorname)
+
+
+# Histogram with right-open bins (default = left-open)
+hist(vectorname, right = FALSE)
+
+
+# modify histogram bin/breakpoint range and width
+hist(mammals$log.mass, breaks = seq(from=0, to=10, by=2))
+
+
+# Probability density histogram 
+hist(mammals$log.mass, probability = TRUE, right = FALSE, ylim = c(0,0.4),
+     xlab = "Logged.Mammal.Mass.Grams")
+
+
+# Probability density histogram  with superimposed normal density curve. 
+hist(mammals$log.mass, probability = TRUE, right = FALSE, ylim = c(0, 0.4))
+m <- mean(mammals$log.mass, na.rm = TRUE)
+s <- sd(mammals$log.mass, na.rm = TRUE)
+xpts <- seq(from = min(mammals$log.mass, na.rm = TRUE),
+            to = max(mammals$log.mass, na.rm = TRUE), length.out = 101)
+lines(dnorm(xpts, mean = m, sd = s) ~ xpts, 
+      col = "red", lwd = 2, ylim = c(0, 0.4))
+
+
+
+# Histograms - vertically stacked comparing frequency distribution 
+# of numerical data by categories. 
+par(mfrow = c(4, 1),      # rows and columns
+    mar = c(4, 4, 2, 1),  # margins around each plot
+    cex = 0.7)            # font size
+for( i in unique(data$categories) ){         # for loop - unique values in data$categories
+  dat <- subset(data, data$categories == i)  # dat <- each value within data$categories
+  hist(dat$numerical.data, breaks = seq(from=0, to=10, by=0.5),  # making the histograms
+       right = FALSE, xlim = c(0, 10), col = "darkgreen", 
+       main = i, xlab = "Units", ylab = "Frequency")
+}
+
+
+
+######################## 2 Bar Plot ###################################
+
+
+# Bar plot  with ylab, color, bar spacing, font size, label angle,
+# and y-axixs limit
+barplot(table(Object$variable), ylab = "label", col = "anycolor", 
+        space = 0.3, cex.names = 0.8, las = 1, ylim = c(0,1600))
+
+
+# barplot with bars ordered in decreasing frequency
+barplot(sort(table(mammals$continent), decreasing = TRUE))
+
+
+####################### 3 Quantile-Quantile Plot #####################
+# quantile plot
+qqnorm(mammals$log.mass)
+
+# q-q plot with line through first and third quantiles
+qqline(mammals$log.mass)  
+
+
+####################### 4 Box Plot ####################################
+# Box plot comparison of numerical A between categories B
+boxplot(data$numerical.a ~ data$categorical.a, 
+        ylab = "Units", xlab = "Categories")
+
+
+# Box plot - title and box width = square root of sample size
+boxplot(data$numerical.a ~ data$categorical.b, varwidth = TRUE,
+        ylab = "Units", xlab = "Categories", 
+        main = "Title")
+
+
+
+########################## 5 Strip Chart #######################################
+
+# vertical strip chart with jitter, x axis labels rotated and reduced to fit
+stripchart(longevity.days ~ treatment, data = fruitflies, 
+           vertical = TRUE, method = "jitter", las = 1, cex = 1, 
+           cex.axis = 0.8)
+
+
+###################### 6 Graph Tools #########################################
+
+# points() add points to a plot
+points()
+
+
+# par() defines number of rows and columns in plot window with mfrow
+# R will anticipate x*y plots following par function
+# mar argument determines margins of each panel
+par(mfrow = c(y, x),
+    mar = c(4, 4, 2, 1))
+
+
+# legend function adds legends to plots
+# locator(1) makes the legend placed with a click
+legend(locator(1))
+
+
+
+# abline function places a line on a plot
+# can be combined with a linear regression model function lm()
+abline(lm(variable.a ~ variable.b))
+
+
+
+
+##################### 7 Graph Arguments #######################
+
+# pch argument defines symbols in plot or legend
+pch = x
+
+# type argument defines what type of plot is drawn
+plot(x, type = "character")
+
+# col() - defines color of data in graph
+plot(x, col = "darkgreen")
+
+
+
+
