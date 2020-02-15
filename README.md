@@ -4,7 +4,9 @@ Comparing Google search trends for "sexual enhancement" to fluctuations in weath
 This repository contains R scripts, data, and figures for a Data Analysis in R course project.
 
 
-Cities list should be ordered!
+
+
+> Cities list should be ordered!
 
 **Weather workflow**
 1. Reduce uscities data to top *n* cities 
