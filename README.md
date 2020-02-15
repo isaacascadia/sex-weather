@@ -6,7 +6,7 @@ This repository contains R scripts, data, and figures for a Data Analysis in R c
 
 
 
-> Cities list should be ordered!
+Cities list should be ordered!
 
 **Weather workflow**
 1. Reduce uscities data to top *n* cities 
