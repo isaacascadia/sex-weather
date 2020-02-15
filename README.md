@@ -13,11 +13,13 @@ Cities list should be ordered!
 2. extract city lat and long from uscities data
 3. Use lat and long to find first station in each city
 4. paste wban and usaf codes to collect weather data for ith city
+5. store relevant variables in .csv
 
 
 **Gtrends workflow**
 1. use cities data to find sub_codes for top *n* cities
 2. query gtrends with ith city's sub_code
+3. store relevant variables in a .csv
 
 
 **Analysis workflow**
