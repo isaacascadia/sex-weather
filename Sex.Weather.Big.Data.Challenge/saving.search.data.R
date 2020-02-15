@@ -55,7 +55,7 @@ countries <- gtrendsR::countries
 city.list <- c("Seattle-Tacoma,WA", "Portland, OR")
 
 
-for(i in 1:length(city.list){
+for(i in 1:length(city.list)){
   
   city.list[i]
 }
@@ -127,6 +127,18 @@ for(i in 1:n.permut){
   # store the stats.diffH0 in a storgae vector
   null.test.stats[i] <- stats.diff.H0
 }
+
+
+
+#============================ Playing around with noaa =========================
+library(rnoaa)
+station <- isd_stations_search(lat = 40.6943, lon = -73.9249, radius = 25)
+
+station$usaf[1]
+
+ny.weather <- lcd(station = paste(station$usaf[1], station$wban[1], sep = ""), 
+                  year = 2018)
+
 
 
 
