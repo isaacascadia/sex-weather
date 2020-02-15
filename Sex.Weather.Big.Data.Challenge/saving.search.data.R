@@ -53,17 +53,44 @@ se.sea.over.5y <- se.sea.5y$interest_over_time
 
 cities.needed
 
-for(i in 1:length(cities)){
-obj <- gtrends(geo = as.character(cities.needed[i,2]), time = "today+5-y", category = 1236, onlyInterest = TRUE)
-write.csv(obj, paste(wd, "/data.output", as.character(cities.needed[i,1])), 
-          ".csv", sep = "")
-  }
+cities <- read.csv("cities.csv",
+                   stringsAsFactors = FALSE, 
+                   strip.white = TRUE, 
+                   na.strings = c(NA, ""))
+
+head(cities)
 
 
-se.sea.5y$interest_over_time
+# loop to create .csv for every gtrends query
+for(i in 1:length(cities$name)){
+
+# i <- 1
+
+# saving gtrends query to object
+list <- gtrends(geo = as.character(cities[i,3]), 
+               category = 1236, onlyInterest = TRUE)
+
+obj <- list$interest_over_time
+
+# saving object to .csv
+write.csv(obj, paste(wd, "/data.output/", as.character(cities[i,1]), 
+          ".csv", sep = ""))
+  }  # end of loop
 
 
 
+rm(i)
+
+
+# fuckin' around
+city <- as.character(cities$sub_code[
+  which(cities$name == "Washington, DC")])
+int <- gtrends(geo = as.character(city), 
+                category = 1236, onlyInterest = TRUE)
+test <- (int$interest_over_time)
+head(test)
+
+class(test)
 
 
 
