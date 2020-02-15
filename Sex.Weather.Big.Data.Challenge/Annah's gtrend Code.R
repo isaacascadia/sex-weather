@@ -144,11 +144,14 @@ find.codes2 <- function(cities.needed){
 # this generates the data frame you'll populate with names and sub codes  
     df1 <- data.frame(sub_code = rep(NA, 51), name = rep(NA, 51))
 
-# this makes an object with the name and subcode of a city and puts it into the ith row of the 1st and 2nd cols
+# this makes an object with the name and subcode of a city and puts it into the 
+# ith row of the 1st and 2nd cols
     obj <- countries[which(countries$name == as.character(cities.needed$name[i])), c(2, 3)]
   df1[i,1] <- as.character(obj$sub_code)
   df1[i,2] <- as.character(obj$name)
 }
+
+
 
 # remove df1 to start clean
 rm(df1)
@@ -157,3 +160,21 @@ test <- countries[which(countries$name == as.character(cities.needed$name[i])), 
 
 testing <- find.codes2(cities.needed)
 View(testing)
+
+rm(i)
+
+#-------------------Trying to loop------------------------------------------
+
+find.codes2 <- function(cities.needed){
+  df1 <- data.frame(sub_code = rep(NA, 51), name = rep(NA, 51))
+  for(i in length(cities.needed)){
+  obj <- countries[which(countries$name == as.character(cities.needed$name[i])), c(2, 3)]
+  df1[i,1] <- as.character(obj$sub_code)
+  df1[i,2] <- as.character(obj$name)}}
+
+
+find.codes2(cities.needed)
+print(find.codes2(cities.needed))
+#I am getting a null...?
+
+
