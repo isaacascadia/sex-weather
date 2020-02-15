@@ -1,48 +1,65 @@
+#Intsall and pull database
 install.packages("gtrendsR")
 library(gtrendsR)
 
+#Pull cataogries data frame from gtrends
 catagories <- gtrendsR::categories
 
-cities.needed <- NULL
+#Pull countries data frame from gtrends
+countries <- gtrendsR::countries
 
-cities.needed <- c("Birmingham, AL", "Anchorage, AK", "Phoenix, AZ", "Little Rock-Pine Bluff, AR","Los Angeles, CA", 
-                         "Denver, CO", "Hartford & New Haven, CT", "Washington, DC (Hagerstown, MD)", "Jacksonville, FL",
-                         "Atlanta, GA", "Honolulu, HI", "Boise, ID", "Chicago, IL", "Indianapolis, IN", 
-                         "Des Moines-Ames, IA", "Wichita-Hutchinson, KS", "Louisville, KY", "New Orleans, LA", "Portland-Auburn, ME",
-                         "Baltimore, MD", "Boston, MA-Manchester, NH", "Detroit, MI", "Minneapolis-St. Paul, MN", "Jackson, MS", 
-                         "Kansas City, MO", "Billings, MT", "Omaha, NE", "Las Vegas, NV", "Boston, MA-Manchester, NH",
-                         "Albuquerque-Santa Fe, NM", "New York, NY", "Charlotte, NC", "US-ND-724", 
-                         "Columbus, OH", "Oklahoma City, OK", "Portland, OR", "Philadelphia, PA", 
-                         "Providence, RI", "Charleston, SC", "Sioux Falls, SD", "Nashville, TN", "Houston, TX", 
-                         "Salt Lake City, UT", "Burlington, VT", "Virginia Beach, VA", "Seattle-Tacoma, WA",
-                         "Charleston, WV", "Milwaukee, WI", "Cheyenne, WY")
+#figuring out how to search
+#key word search
+gtrends("border collie")
+#location search
+gtrends("border collie", geo = "US")
+#time search (the last hour)
+gtrends("border collie", geo = "US", time = "now 1-H")
+#catagory search (886=dogs) where timeframe = the last month
+gtrends(geo="US", time = "today 1-m", 
+                    category = 886)
+
+#Create a vector containing a list of cities from the countries data frame
+cities.needed <- c("Birmingham, AL", "Anchorage, AK", "Phoenix, AZ", "Little Rock-Pine Bluff, AR",
+                   "Los Angeles, CA", "Denver, CO", "Hartford & New Haven, CT", 
+                   "Washington, DC (Hagerstown, MD)", "Jacksonville, FL", "Atlanta, GA", "Honolulu, HI", 
+                   "Boise, ID", "Chicago, IL", "Indianapolis, IN", "Des Moines-Ames, IA", "Baltimore, MD", 
+                   "Boston, MA-Manchester, NH", "Detroit, MI", "Minneapolis-St. Paul, MN", "Jackson, MS", 
+                   "Kansas City, MO", "Billings, MT", "Omaha, NE", "Las Vegas, NV", "Boston, MA-Manchester, NH", 
+                   "Albuquerque-Santa Fe, NM", "New York, NY", "Charlotte, NC", "US-ND-724", "Columbus, OH", 
+                   "Oklahoma City, OK", "Portland, OR", "Philadelphia, PA", "Providence, RI-New Bedford, MA", 
+                   "Charleston, SC", "Sioux Falls(Mitchell), SD", "Nashville, TN", "Houston, TX", 
+                   "Salt Lake City, UT", "Burlington, VT-Plattsburgh, NY", "Richmond-Petersburg, VA", 
+                   "Seattle-Tacoma, WA", "Charleston-Huntington, WV", "Milwaukee, WI", 
+                   "Cheyenne, WY-Scottsbluff, NE")
+
+length(cities.needed)
+
+#First interation of a functions
+
+find.codes1 <- function(city.name){
+  df1 <- countries[which(countries$name == city.name), c(2, 3)]
+}
+
+testing <- find.codes1("Birmingham, AL")
+View(testing)
 
 
-#WORKING - DO NOT TOUCH
+#This is bewteen having to give it a city name manually
+#and setting it up for a loop
 i <- 1
-find.codes2 <- function(city.name){
+find.codes1 <- function(city.name){
   df1 <- data.frame(Country.Code = character(51), City.Name = character(51))
   df1[i,] <- countries[which(countries$name == as.character(cities.needed$name[i])), c(2, 3)]
 }
 
-testing <- find.codes2("Portland, OR")
+testing <- find.codes1("Portland, OR")
 View(testing)
-#WORKING - DO NOT TOUCH
 
 
-#ALT WORKING
-find.codes2 <- function(city.name){
-  df1 <- countries[which(countries$name == city.name), c(2, 3)]
-}
-
-testing <- find.codes("Birmingham, AL")
-View(testing)
-#ALT WORKING
-
-
-
+#First real attempt at automation
 i <- 1
-find.codes2 <- function(cities.needed){
+find.codes1 <- function(cities.needed){
 
 # this generates the data frame you'll populate with names and sub codes  
     df1 <- data.frame(sub_code = rep(NA, 51), name = rep(NA, 51))
@@ -54,14 +71,13 @@ find.codes2 <- function(cities.needed){
   df1[i,2] <- as.character(obj$name)
 }
 
-
-
-# remove df1 to start clean
+#remove df1 from memory to start trial and error clean
 rm(df1)
 
+#playing with i
 test <- countries[which(countries$name == as.character(cities.needed$name[i])), c(2, 3)]
 
-testing <- find.codes2(cities.needed)
+testing <- find.codes1(cities.needed)
 View(testing)
 
 rm(i)
@@ -101,6 +117,7 @@ print(fff)
 obj <- countries[which(countries$name == as.character(cities.needed[2])), c(2, 3)]
 
 
+#Trying to loop gain
 find.codes2 <- function(cities.needed){
   df1 <- data.frame(sub_code = rep(NA, 51), name = rep(NA, 51))
   for (i in cities.needed[1:length(cities.needed)]) {
@@ -112,10 +129,7 @@ find.codes2 <- function(cities.needed){
 find.codes2(cities.needed)
 print(find.codes2(cities.needed))
 
-#---------------------new section------------------------------------
-
-rm(fff)
-
+#Playing with loops again
 fff <- NULL
 i <- 1:51
 fff[i] <- cities.needed[i]
@@ -128,6 +142,7 @@ for(i in 1:51){
 print(df)
 #WORKING
 
+#Trying to improve
 df1 <- NULL
 for(i in 1:51){
   df1[i] <- data.frame(cities.needed[i])}
@@ -148,19 +163,16 @@ find.codes2 <- function(cities.needed){
 
 find.codes2(cities.needed)
 
-i=1
-df1[i] <- 005
+#-------------making a function that searches with city codes---------------
 
+#first attempt at a function to search for out catagory in the last
+#5 years with a given city code
+sex.search <- function(city.code){
+  gtrends(geo = city.code, time = "today+5-y", category = 1236)}
 
-
-
-
-
-
-
-
-
-
+#testing
+sex.search("US-OR-820")
+#works
 
 
 
