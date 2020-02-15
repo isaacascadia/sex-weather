@@ -13,12 +13,11 @@ wd <- getwd()
 dir.create("data")
 
 
-# install gtrendsR package
-install.packages("gtrendsR")
+mydata <- read.csv("filename.csv", 
+                   stringsAsFactors = FALSE, 
+                   strip.white = TRUE, 
+                   na.strings = c(NA, ""))
 
-#open libraries
-library(gtrendsR)
-library(dplyr)
 
 
 #============================ Searching for some data ==========================
@@ -28,14 +27,47 @@ library(dplyr)
 (categories$id[categories$name == "Sexual Enhancement"])
 # [1] "1236"
 
-# save the gtrends query to an object
-se.us.1d <- gtrends(keyword = "sex", geo = "US", time = "now 1-d",
-                          gprop = c("web"),category = 1236, hl = "en-US", 
-                          low_search_volume = FALSE,
-                          cookie_url = "http://trends.google.com/Cookies/NID", 
-                          tz = 0,onlyInterest = FALSE)
 
-se.us.over.1d <- se.us.1d$interest_over_time
+head(countries)
+countries$sub_code[which(countries$name == "Detroit, MI")]
+
+
+
+sea <- countries$sub_code[which(countries$name == "Seattle-Tacoma, WA")]
+
+
+
+# save the gtrends query to an object
+se.sea.5y <- gtrends(geo = as.character(sea), time = "today+5-y", 
+                     category = 1236, onlyInterest = TRUE)
+
+se.sea.over.5y <- se.sea.5y$interest_over_time
+
+countries <- gtrendsR::countries
+
+
+
+
+
+
+# making a function to search through a bunch 
+
+city.list <- c("Seattle-Tacoma,WA", "Portland, OR")
+
+
+for(i in 1:length(city.list)){
+  
+  city.list[i]
+}
+
+
+
+
+
+
+
+
+
 
 
 #============================ Save dat data ====================================
@@ -49,7 +81,6 @@ file.exists(paste(wd, "/data/se.us.over.1d.csv", sep = ""))
 # [1] TRUE
 
 
-deparse(substitute(se.us.over.1d))
 
 # making a function to automatically save query data based on a list of objects
 
@@ -63,7 +94,13 @@ fsave.data <- function(laundry){
     return()
 }
 
+# testing the function
 fsave.data(se.us.over.1d)
+
+
+
+  
+
 
 # loop that shit (forthcoming)
 for(i in 1:length(laundry)){}
@@ -90,6 +127,18 @@ for(i in 1:n.permut){
   # store the stats.diffH0 in a storgae vector
   null.test.stats[i] <- stats.diff.H0
 }
+
+
+
+#============================ Playing around with noaa =========================
+library(rnoaa)
+station <- isd_stations_search(lat = 40.6943, lon = -73.9249, radius = 25)
+
+station$usaf[1]
+
+ny.weather <- lcd(station = paste(station$usaf[1], station$wban[1], sep = ""), 
+                  year = 2018)
+
 
 
 
