@@ -43,7 +43,6 @@ se.sea.5y <- gtrends(geo = as.character(sea), time = "today+5-y",
 
 se.sea.over.5y <- se.sea.5y$interest_over_time
 
-countries <- gtrendsR::countries
 
 
 
@@ -52,16 +51,15 @@ countries <- gtrendsR::countries
 
 # making a function to search through a bunch 
 
-city.list <- c("Seattle-Tacoma,WA", "Portland, OR")
+cities.needed
+
+for(i in 1:length(cities)){
+obj <- gtrends(geo = as.character(cities.needed[i,2]), time = "today+5-y", category = 1236, onlyInterest = TRUE)
+write.csv(obj)
+  }
 
 
-for(i in 1:length(city.list)){
-  
-  city.list[i]
-}
-
-
-
+se.sea.5y$interest_over_time
 
 
 
@@ -128,6 +126,40 @@ for(i in 1:n.permut){
   null.test.stats[i] <- stats.diff.H0
 }
 
+
+#===== getting subcodes function ============================================
+
+cities.needed <- data.frame(names = 
+                              c("Birmingham, AL", "Anchorage, AK", "Phoenix, AZ", 
+                                "Little Rock-Pine Bluff, AR","Los Angeles, CA", "Denver, CO", 
+                                "Wilmington, DE", "Washington, DC", 
+                                "Jacksonville, FL", "Atlanta, GA", "Honolulu, HI", 
+                                "Boise, ID", "Chicago, IL", "Indianapolis, IN", 
+                                "Des Moines, IA", "Wichita, KS", "Louisville, KY", 
+                                "New Orleans, LA", "Portland, ME","Baltimore, MD", 
+                                "Boston, MA", "Detroit, MI", "Minneapolis, MN", 
+                                "Jackson, MS", "Kansas City, MO", "Billings, MT", 
+                                "Omaha, NE", "Las Vegas, NV", "Manchester, NH","Newark, NJ", 
+                                "Albuquerque, NM", "New York City, NY", "Charlotte, NC", 
+                                "Fargo, ND", "Columbus, OH", "Oklahoma City, OK", 
+                                "Portland, OR", "Philadelphia, PA", "Providence, RI", 
+                                "Charleston, SC", "Sioux Falls, SD", "Nashville, TN", 
+                                "Houston, TX", "Salt Lake City, UT", "Burlington, VT", 
+                                "Virginia Beach, VA", "Seattle-Tacoma, WA","Charleston, WV", 
+                                "Milwaukee, WI", "Cheyenne, WY"), sub_code = rep(NA, 50))
+
+
+
+for(i in 1:length(cities.needed[,2])){
+  cities.needed[i,2] <- as.character(countries[
+    which(countries$name == as.character(cities.needed[i,1])),
+    2])
+}
+
+
+fcode(cities.needed)
+
+rm(i)
 
 
 #============================ Playing around with noaa =========================
