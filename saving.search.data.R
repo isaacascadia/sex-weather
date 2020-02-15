@@ -49,14 +49,17 @@ file.exists(paste(wd, "/data/se.us.over.1d.csv", sep = ""))
 # [1] TRUE
 
 
+deparse(substitute(se.us.over.1d))
 
 # making a function to automatically save query data based on a list of objects
 
 fsave.data <- function(laundry){
   write.csv(x = laundry, 
                          # how to print object name in filename?
-            file = paste(wd, "/data/", "laundry", ".csv", sep = ""))  
-  file.exists(paste(wd, "/data/", "laundry", ".csv", sep = "")) %>%   
+            file = paste(wd, "/data/", deparse(substitute(se.us.over.1d)), 
+                                               ".csv", sep = ""))  
+  file.exists(paste(wd, "/data/", deparse(substitute(se.us.over.1d)), ".csv", 
+                                          sep = "")) %>%   
     return()
 }
 
@@ -90,4 +93,3 @@ for(i in 1:n.permut){
 
 
 
-  

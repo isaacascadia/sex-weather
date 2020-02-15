@@ -1,0 +1,39 @@
+sample(c(1:5), replace = FALSE)
+
+
+library(forcats)
+cat <- factor(c(1:5))
+fct_shuffle(f = cat)
+
+
+rnorm(5, )
+
+
+
+letters[4]
+# 
+# 
+d <- cbind.data.frame(group = c("A", "A", "C", "Z"), size = c(55,44,33,22),
+                      weight = rnorm(4, 1, 4))
+
+str(d)
+
+group.numbe
+
+
+if(d$group)[1] == "A"){
+  print("yep")
+  d$size[1] * d$weight[1]
+  
+}
+
+
+
+
+
+library(rnoaa)
+station <- isd_stations_search(lat = 40.6943, lon = -73.9249, radius = 25)
+
+station$usaf[1]
+
+ny.weather <- lcd(station = paste(station$usaf[1], station$wban[1], sep = ""), year = 2018)
