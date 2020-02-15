@@ -3,24 +3,6 @@ library(gtrendsR)
 
 gtrends("border collie")
 
-gtrends("Quest University")
-
-gtrends("trump and putin")
-
-gtrends("saxx underwear")
-
-gtrends("jocko willink")
-
-gtrends("how to build a bomb")
-
-gtrends("race jokes", time = "today 1-m")
-
-gtrends("suicide")
-
-gtrends("apocalypse survival kit")
-
-length(gtrends("corona virus"))
-
 res <- gtrends(c("nhl", "nba"), geo = c("CA", "US"))
 plot(res)
 
@@ -61,7 +43,8 @@ cities <- subset(countries, name == "Portland, OR", "Austin, TX")
 
 cities.needed <- NULL
 
-cities.needed <- data.frame(c("Birmingham, AL", "Anchorage, AK", "Phoenix, AZ", "Little Rock, AR","Los Angeles, CA", 
+cities.needed <- data.frame(name =
+  c("Birmingham, AL", "Anchorage, AK", "Phoenix, AZ", "Little Rock, AR","Los Angeles, CA", 
                          "Dever, CO", "Bridgeport, CT", "Wilmington, DE", "Washington, DC", "Jacksonville, FL",
                          "Atlanta, GA", "Honolulu, HI", "Boise, ID", "Chicago, IL", "Indianapolis, IN", 
                          "Des Moines, IA", "Wichita, KS", "Louisville, KY", "New Orleans, LA", "Portland, ME",
@@ -83,11 +66,94 @@ portland <- countries[countries$name == "Portland, OR", ]
 cities.desired <- rep(NA, 50)
 city.codes <- rep(NA, 50)
 
-find.codes <- function(city.name){
-  df1 <- countries[countries$name == city.name, ]
+find.codes1 <- function(city.name){
+  df1 <- countries[countries$name == city.name,]
   df2 <- subset(df1, !is.na(df1[, 2]))}
 
-testing <- find.codes("Portland, OR", portland.1, portland.2)
+testing <- find.codes1("Portland, OR")
+
+find.codes2 <- function(city.name){
+  df1 <- data.frame(Country.Code = character(51), City.Name = character(51))
+  df1 <- countries[countries$name[which(countries$name == as.character(city.name))]]
+  }
+
+testinf1 <- find.codes2("Portland, OR")
+
+
+city.name <- "Portland, OR"
+bb <- countries[which(countries$name == as.character(city.name)),]
+
+find.codes2 <- function(City.Name){
+  df1 <- data.frame(Country.Code = character(51), City.Name = character(51))
+  df1 <- countries[which(countries$name == city.name), c(2, 3)]
+}
+
+testing <- find.codes("Birmingham, AL")
+View(testing)
+
+find.codes2 <- function(city.name){
+  df1 <- countries[which(countries$name == city.name), c(2, 3)]
+}
+
+find.codes2 <- (cities.needed[1]){
+  df1 <- data.frame(Country.Code = character(51), cities.needed$names[1] = character(51))
+  df1 <- countries[which(countries$name == city.name), c(2, 3)]
+}
+
+find.codes2 <- function(city.name){
+  df1 <- countries[countries$name[which(countries$name == as.character(city.name))]]
+}
+
+testing <- find.codes2(cities.needed[1, 1])
+testing
+
+find.codes2 <- function(city.name){
+  df1 <- data.frame(Country.Code = character(51), City.Name = character(51))
+  df1 <- countries[countries$name[which(countries$name == as.character(city.name)),]]
+}
+
+
+cities.needed$name[1]
+
+#WORKING - DO NOT TOUCH
+i <- 1
+find.codes2 <- function(city.name){
+  df1 <- data.frame(Country.Code = character(51), City.Name = character(51))
+  df1[i,] <- countries[which(countries$name == as.character(cities.needed$name[i])), c(2, 3)]
+}
+
+testing <- find.codes2("Portland, OR")
+View(testing)
+#WORKING - DO NOT TOUCH
+
+
+#ALT WORKING
+find.codes2 <- function(city.name){
+  df1 <- countries[which(countries$name == city.name), c(2, 3)]
+}
+
+testing <- find.codes("Birmingham, AL")
+View(testing)
+#ALT WORKING
 
 
 
+i <- 1
+find.codes2 <- function(cities.needed){
+
+# this generates the data frame you'll populate with names and sub codes  
+    df1 <- data.frame(sub_code = rep(NA, 51), name = rep(NA, 51))
+
+# this makes an object with the name and subcode of a city and puts it into the ith row of the 1st and 2nd cols
+    obj <- countries[which(countries$name == as.character(cities.needed$name[i])), c(2, 3)]
+  df1[i,1] <- as.character(obj$sub_code)
+  df1[i,2] <- as.character(obj$name)
+}
+
+# remove df1 to start clean
+rm(df1)
+
+test <- countries[which(countries$name == as.character(cities.needed$name[i])), c(2, 3)]
+
+testing <- find.codes2(cities.needed)
+View(testing)
