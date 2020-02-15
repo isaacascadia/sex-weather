@@ -1,5 +1,5 @@
 #label working directory
-wd <- getwd()
+main.wd <- getwd()
 
 
 
@@ -24,12 +24,12 @@ for(i in 1:length(output.folder.names))
 
 # Create Folder Paths
 #Path to figures folder
-path.figures <- paste(wd, "/", output.folder.names[1], "/", sep = "")
+path.figures <- paste(main.wd, "/", output.folder.names[1], "/", sep = "")
 #Path to data folder
-path.data <- paste(wd, "/", output.folder.names[2], "/", 
+path.data <- paste(main.wd, "/", output.folder.names[2], "/", 
                           sep = "")
 
 
 #Example of posting to the datafolder
-write.csv(output.folder.names, paste(path.data.output, "uselessnames.csv"),
+write.csv(output.folder.names, paste(path.data, "uselessnames.csv"),
           row.names = FALSE)
