@@ -55,7 +55,8 @@ cities.needed
 
 for(i in 1:length(cities)){
 obj <- gtrends(geo = as.character(cities.needed[i,2]), time = "today+5-y", category = 1236, onlyInterest = TRUE)
-write.csv(obj)
+write.csv(obj, paste(wd, "/data.output", as.character(cities.needed[i,1])), 
+          ".csv", sep = "")
   }
 
 
