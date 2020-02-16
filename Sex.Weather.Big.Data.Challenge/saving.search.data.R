@@ -56,6 +56,10 @@ rm(i)
 
 
 
+
+
+
+
 #============================ queries to csvs function ========================= 
 
 
@@ -63,6 +67,9 @@ rm(i)
 (categories$id[categories$name == "Sexual Enhancement"])
 # [1] "1236"
 
+# removing with populations under 50,000 
+
+big.cities <- subset(cities, Population > 50000)
 
 
 # making a function to search through a bunch of city subcodes and print .csv
@@ -73,48 +80,43 @@ head(cities)
 
 
 
-# loop to create .csv for every gtrends query
-for(i in 1:length(cities$name)){
 
-# i <- 1
-
-# saving gtrends query to object
-list <- gtrends(geo = as.character(cities[i,3]), 
-               category = 1236, onlyInterest = TRUE)
-
-obj <- list$interest_over_time
-
-# saving object to .csv
-write.csv(obj, paste(wd, "/data.output/", as.character(cities[i,1]), 
-          ".csv", sep = ""))
+# loop to create .csv for first half of gtrends queries
+for(i in 1:(length(big.cities$name)/2)){
+  
+  # saving gtrends query to object
+  list <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), 
+                  category = 1236, onlyInterest = TRUE)
+ 
+   obj <- list$interest_over_time
+   
+   # saving object to .csv
+   write.csv(obj, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
+                       ".csv", sep = ""))
   }  # end of loop
 
 
 
-rm(i)
+# loop to create .csv for second half of gtrends queries
+for(i in length(big.cities$name)/2+1:length(big.cities$name)){
+  
+  # saving gtrends query to object
+  list <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), 
+                  category = 1236, onlyInterest = TRUE)
+  
+  obj <- list$interest_over_time
+  
+  # saving object to .csv
+  write.csv(obj, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
+                       ".csv", sep = ""))
+  }  # end of loop
+
 
 
 # checking work
 file.exists(paste(wd, "/data/", deparse(substitute(se.us.over.1d)), ".csv", 
                   sep = "")) %>%   
   return()
-
-
-
-
-# fuckin' around
-city <- as.character(cities$sub_code[
-  which(cities$name == "Washington, DC")])
-int <- gtrends(geo = as.character(city), 
-                category = 1236, onlyInterest = TRUE)
-test <- (int$interest_over_time)
-head(test)
-
-class(test)
-
-
-
-
 
 
 
