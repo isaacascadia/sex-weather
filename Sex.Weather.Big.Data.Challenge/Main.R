@@ -41,6 +41,7 @@ library(dplyr)
 #===== Global Variables =======================================================
 
 countries <- gtrendsR::countries
+categories <- gtrendsR::categories
 
 cities <- read.csv("cities.csv",
                    stringsAsFactors = FALSE, 
