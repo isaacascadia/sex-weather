@@ -212,4 +212,7 @@ for(i in (length(big.cities$name)/2):length(big.cities$name)){
   write.csv(obj, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
                        ".csv", sep = ""))}
 
+gtrends(geo = "US-AL-630", time = "2014-01-01 2014-09-01", category = 1236, 
+        onlyInterest = TRUE)
+
 
