@@ -1,4 +1,4 @@
-
+wd <- getwd()
 
 
 
@@ -29,7 +29,7 @@ path.data <- paste(wd, "/", output.folder.names[2], "/",
 
 
 #Example of posting to the datafolder
-write.csv(output.folder.names, paste(path.data.output, "uselessnames.csv"),
+write.csv(output.folder.names, paste(path.data, "uselessnames.csv"),
           row.names = FALSE)
 
 

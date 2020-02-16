@@ -5,128 +5,84 @@ install.packages("rnoaa")
 library("rnoaa")
 
 #Import needed dataset
-US.Cities <- read.csv("uscities.csv", na.strings = "")
-
+US.Cities <- read.csv("cities.csv", na.strings = "")
+1
 
 ####Making a weather dataset for one city#######################################
 #Look up city 
-station.1 <- isd_stations_search(lat=US.Cities$lat[1], lon = US.Cities$lng[1])
+station.1 <- isd_stations_search(lat=US.Cities$lat[5], lon = US.Cities$lng[5])
 
 
 #find city station 
-station.id.1 <- paste(station.1$usaf[1],station.1$wban[1],sep="")
+station.id.1 <- paste(station.1$usaf[3],station.1$wban[3],sep="")
 
 #collect data from station 
-station.1.weather <- lcd(paste(station.1$usaf[1],station.1$wban[1],sep=""), 
-                         year=2017)
+station.1.weather <- lcd(station.id.1, year=2017)
 
 #file name
-filename <- paste(US.Cities$city[1],US.Cities$state_id[1],sep=".")
+filename <- paste(US.Cities$city[5],US.Cities$state_id[5],sep=".")
 
 #create new dataset
-write.csv(station.1.weather, paste(path.data, filename,".csv"),
+write.csv(station.1.weather, paste(path.data, filename,"Ank.AL.csv"),
           row.names = FALSE)
 
 
 ####Turn it into a looop loop lop lp############################################
 
-
+#----Attempt 1------------------------------------------------------------------
 #Try it out
 for(i in 1:nrow(US.Cities)){
 #Look up city 
 station <- isd_stations_search(lat=US.Cities$lat[i], lon = US.Cities$lng[i])
 
 #find city station 
-station.id <- paste(station$usaf[i],station$wban[i],sep="")
+station.id <- paste(station$usaf[1],station$wban[1],sep="")
 
 #collect data from station 
-station.weather <- lcd(paste(station$usaf[i],station$wban[i],sep=""), 
-                         year=2017)
+station.weather <- lcd(station.id, year=2017)
 
 #file name
-filename <- paste(US.Cities$city[i],US.Cities$state_id[i],sep=".")
+filename <- paste(US.Cities$name[i], "weather.csv",sep=".")
 
 #create new dataset
-write.csv(station.weather, paste(path.data, filename,".csv", sep=""),
+write.csv(station.weather, paste(path.data, paste(filename), sep=""),
           row.names = FALSE)
 }
 
 #Quickly receiving HTTP 404 errors, deleting rows in the data set works
 
-#Work around attempt 1
-#Try it out
+#----Attempt 2------------------------------------------------------------------
+#Work around 1
+
+
 for(i in 1:nrow(US.Cities)){
+  tryCatch({
   #Look up city 
   station <- isd_stations_search(lat=US.Cities$lat[i], lon = US.Cities$lng[i])
   
   #find city station 
-  station.id <- paste(station$usaf[i],station$wban[i],sep="")
+  station.id <- paste(station$usaf[1],station$wban[1],sep="")
   
   #collect data from station 
-  station.weather <- try(lcd(paste(station$usaf[i],station$wban[i],sep=""), 
-                         year=2017))
-  
-  if(!inherits(station.weather,"Error")){ 
-    (i+1)
-    station.test <- isd_stations_search(lat=US.Cities$lat[i], lon = US.Cities$lng[i])
-    
-    #find city station 
-    station.id.test <- paste(station$usaf[i],station$wban[i],sep="")
-    
-    #collect data from station 
-    station.weather <- try(lcd(paste(station$usaf[i],station$wban[i],sep=""), 
-                               year=2017))}
-  else{ #file name
-    filename <- paste(US.Cities$city[i],US.Cities$state_id[i],sep=".")
-    }
-    
-    #create new dataset
-    write.csv(station.weather, paste(path.data, filename,".csv", sep=""),
-              row.names = FALSE)
-    }
-  
-
-  
-  
-  mtry <- try(tuneRF(dat3[, -36], dat3[,36], ntreeTry=1000,
-                     stepFactor=1.5,improve=0.01, trace=TRUE, plot=TRUE))
-  if (!inherits(mtry, "try-error")) {
-    best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
-    rf <- randomForest(classe~.,data=dat3, mtry=best.m, importance=TRUE,ntree=1000)
-  } else {
-    rf <- randomForest(classe~.,data=dat3, importance=TRUE,ntree=1000)
-  }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  station.weather <- lcd(station.id, year=2017)}, error=function(e){
+    })
   
   #file name
-  filename <- paste(US.Cities$city[i],US.Cities$state_id[i],sep=".")
+  filename <- paste(US.Cities$name[i], "weather.csv",sep=".")
   
   #create new dataset
-  write.csv(station.weather, paste(path.data, filename,".csv", sep=""),
+  write.csv(station.weather, paste(path.data, paste(filename), sep=""),
             row.names = FALSE)
+  
 }
 
+#That worked, kinda... it output a full list of files, but duplicated datasets 
+    #but gave them new names if the station was not available
 
 
+#Time to try to tweak it again
 
+#----Attempt 3------------------------------------------------------------------
 
-
-
-
+ 
 
