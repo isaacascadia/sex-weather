@@ -2,159 +2,13 @@ library(gtrendsR)
 
 # 
 # 
-# This script file contains code  for saving data.
+# This script file contains code  for querying and saving gtrends data.
 # 
 # 
 # 
-#============================ File Management ==================================
 
-# directory stuff
-wd <- getwd()
 
-# create data directory
-dir.create("data")
 
-
-mydata <- read.csv("filename.csv", 
-                   stringsAsFactors = FALSE, 
-                   strip.white = TRUE, 
-                   na.strings = c(NA, ""))
-
-
-
-#============================ Searching for some data ==========================
-
-
-# What is the category id for sexual enhancement?
-(categories$id[categories$name == "Sexual Enhancement"])
-# [1] "1236"
-
-
-head(countries)
-countries$sub_code[which(countries$name == "Detroit, MI")]
-
-
-
-sea <- countries$sub_code[which(countries$name == "Seattle-Tacoma, WA")]
-
-
-
-# save the gtrends query to an object
-se.sea.5y <- gtrends(geo = as.character(sea), time = "today+5-y", 
-                     category = 1236, onlyInterest = TRUE)
-
-se.sea.over.5y <- se.sea.5y$interest_over_time
-
-
-
-
-
-
-
-# making a function to search through a bunch 
-
-cities.needed
-
-cities <- read.csv("cities.csv",
-                   stringsAsFactors = FALSE, 
-                   strip.white = TRUE, 
-                   na.strings = c(NA, ""))
-
-head(cities)
-
-
-# loop to create .csv for every gtrends query
-for(i in 1:length(cities$name)){
-
-# i <- 1
-
-# saving gtrends query to object
-list <- gtrends(geo = as.character(cities[i,3]), 
-               category = 1236, onlyInterest = TRUE)
-
-obj <- list$interest_over_time
-
-# saving object to .csv
-write.csv(obj, paste(wd, "/data.output/", as.character(cities[i,1]), 
-          ".csv", sep = ""))
-  }  # end of loop
-
-
-
-rm(i)
-
-
-# fuckin' around
-city <- as.character(cities$sub_code[
-  which(cities$name == "Washington, DC")])
-int <- gtrends(geo = as.character(city), 
-                category = 1236, onlyInterest = TRUE)
-test <- (int$interest_over_time)
-head(test)
-
-class(test)
-
-
-
-
-
-#============================ Save dat data ====================================
-
-# create a .csv from an object of queried data in "data" folder 
-write.csv(x = se.us.1d$interest_over_time, 
-          file = paste(wd, "/data/se.us.over.1d.csv", sep = ""))
-
-# did write.csv() work?
-file.exists(paste(wd, "/data/se.us.over.1d.csv", sep = ""))
-# [1] TRUE
-
-
-
-# making a function to automatically save query data based on a list of objects
-
-fsave.data <- function(laundry){
-  write.csv(x = laundry, 
-                         # how to print object name in filename?
-            file = paste(wd, "/data/", deparse(substitute(se.us.over.1d)), 
-                                               ".csv", sep = ""))  
-  file.exists(paste(wd, "/data/", deparse(substitute(se.us.over.1d)), ".csv", 
-                                          sep = "")) %>%   
-    return()
-}
-
-# testing the function
-fsave.data(se.us.over.1d)
-
-
-
-  
-
-
-# loop that shit (forthcoming)
-for(i in 1:length(laundry)){}
-      
-
-
-
-
-
-# for loop example
-
-n.permut <- 1000
-null.test.stats <- rep(NA, n.permut)
-
-for(i in 1:n.permut){
-  AB.shuffl <- sample(length(AB), replace = FALSE)
-  # assign first nA to A.temp
-  A.temp <- AB.shuffl[1:nA]
-  # the rest of the reshuffled vector goes to B.temp
-  B.temp <- AB.shuffl[-c(1:nA)]
-  
-  # calculate the test stats under the null hypothesis
-  stats.diff.H0 <- mean(A.temp) - mean(B.temp)
-  # store the stats.diffH0 in a storgae vector
-  null.test.stats[i] <- stats.diff.H0
-}
 
 
 #===== getting subcodes function ============================================
@@ -192,7 +46,81 @@ fcode(cities.needed)
 rm(i)
 
 
-#============================ Playing around with noaa =========================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#============================ queries to csvs function ========================= 
+
+
+# What is the category id for sexual enhancement?
+(categories$id[categories$name == "Sexual Enhancement"])
+# [1] "1236"
+
+# removing with populations under 50,000 
+
+big.cities <- subset(cities, Population > 50000)
+
+
+# making a function to search through a bunch of city subcodes and print .csv
+# files for each query
+
+
+head(cities)
+
+
+
+
+# loop to create .csv for first half of gtrends queries
+for(i in 1:(length(big.cities$name)/2)){
+  
+  # saving gtrends query to object
+  list <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), 
+                  category = 1236, onlyInterest = TRUE)
+ 
+   obj <- list$interest_over_time
+   
+   # saving object to .csv
+   write.csv(obj, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
+                       ".csv", sep = ""))
+  }  # end of loop
+
+
+
+# loop to create .csv for second half of gtrends queries
+for(i in length(big.cities$name)/2+1:length(big.cities$name)){
+  
+  # saving gtrends query to object
+  list <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), 
+                  category = 1236, onlyInterest = TRUE)
+  
+  obj <- list$interest_over_time
+  
+  # saving object to .csv
+  write.csv(obj, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
+                       ".csv", sep = ""))
+  }  # end of loop
+
+
+
+# checking work
+file.exists(paste(wd, "/data/", deparse(substitute(se.us.over.1d)), ".csv", 
+                  sep = "")) %>%   
+  return()
+
+
+
+#============================ noaa =============================================
 library(rnoaa)
 station <- isd_stations_search(lat = 40.6943, lon = -73.9249, radius = 25)
 
