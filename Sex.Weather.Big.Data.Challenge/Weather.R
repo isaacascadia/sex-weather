@@ -94,6 +94,108 @@ for(i in 1:nrow(US.Cities)){
 
 
 
+for(y in 1:nrow(station)){station.id <- paste(station$usaf[y],station$wban[y],sep="")
+
+#collect data from station 
+station.weather <- lcd(station.id, year=2017)
+}
+
+
+
+
+for(i in 1:nrow(US.Cities)){
+  tryCatch({
+    #Look up city 
+    station <- isd_stations_search(lat=US.Cities$lat[i], lon = US.Cities$lng[i])
+    
+    #find city station 
+    station.id <- paste(station$usaf[1],station$wban[1],sep="")
+    
+    #collect data from station 
+    station.weather <- lcd(station.id, year=2017)}, error=for(y in 1:nrow(station)){
+      station.id <- paste(station$usaf[y],station$wban[y],sep="")
+      
+      #collect data from station 
+      station.weather <- lcd(station.id, year=2017)
+    }
+  )
+}
+
+for(i in 1:nrow(US.Cities)){
+  while(true){
+    #Look up city 
+    station <- isd_stations_search(lat=US.Cities$lat[i], lon = US.Cities$lng[i])
+    
+    #find city station 
+    station.id <- paste(station$usaf[1],station$wban[1],sep="")
+    
+    #collect data from station 
+    station.weather <- lcd(station.id, year=2017)
+    
+    #file name
+    filename <- paste(US.Cities$name[i], "weather.csv",sep=".")
+    
+    #create new dataset
+    write.csv(station.weather, paste(path.data, paste(filename), sep=""),
+              row.names = FALSE)
+  } tryCatch(errorCondition("Error: Not Found (HTTP 404)"){
+    for(y in 1:2){station.id <- paste(station$usaf[y],station$wban[y],sep="")
+    
+    #collect data from station 
+    station.weather <- lcd(station.id, year=2017)
+    }
+  })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#file name
+filename <- paste(US.Cities$name[i], "weather.csv",sep=".")
+
+#create new dataset
+write.csv(station.weather, paste(path.data, paste(filename), sep=""),
+          row.names = FALSE)
+
+}
+
+
+
+
+
+
+for (i in 1:10) {
+  tryCatch({
+    print(i)
+    if (i==7) stop("Urgh, the iphone is in the blender !")
+  }, error=function(e){})
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
