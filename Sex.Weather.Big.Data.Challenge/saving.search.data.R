@@ -1,4 +1,3 @@
-library(gtrendsR)
 
 # 
 # 
@@ -9,76 +8,11 @@ library(gtrendsR)
 
 
 
-
-
-#===== getting subcodes function ============================================
-
-cities.needed <- data.frame(names = 
-                              c("Birmingham, AL", "Anchorage, AK", "Phoenix, AZ", 
-                                "Little Rock-Pine Bluff, AR","Los Angeles, CA", "Denver, CO", 
-                                "Wilmington, DE", "Washington, DC", 
-                                "Jacksonville, FL", "Atlanta, GA", "Honolulu, HI", 
-                                "Boise, ID", "Chicago, IL", "Indianapolis, IN", 
-                                "Des Moines, IA", "Wichita, KS", "Louisville, KY", 
-                                "New Orleans, LA", "Portland, ME","Baltimore, MD", 
-                                "Boston, MA", "Detroit, MI", "Minneapolis, MN", 
-                                "Jackson, MS", "Kansas City, MO", "Billings, MT", 
-                                "Omaha, NE", "Las Vegas, NV", "Manchester, NH","Newark, NJ", 
-                                "Albuquerque, NM", "New York City, NY", "Charlotte, NC", 
-                                "Fargo, ND", "Columbus, OH", "Oklahoma City, OK", 
-                                "Portland, OR", "Philadelphia, PA", "Providence, RI", 
-                                "Charleston, SC", "Sioux Falls, SD", "Nashville, TN", 
-                                "Houston, TX", "Salt Lake City, UT", "Burlington, VT", 
-                                "Virginia Beach, VA", "Seattle-Tacoma, WA","Charleston, WV", 
-                                "Milwaukee, WI", "Cheyenne, WY"), sub_code = rep(NA, 50))
-
-
-
-for(i in 1:length(cities.needed[,2])){
-  cities.needed[i,2] <- as.character(countries[
-    which(countries$name == as.character(cities.needed[i,1])),
-    2])
-}
-
-
-fcode(cities.needed)
-
-rm(i)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#============================ queries to csvs function ========================= 
-
-
-# What is the category id for sexual enhancement?
-(categories$id[categories$name == "Sexual Enhancement"])
-# [1] "1236"
-
-# removing with populations under 50,000 
-
-big.cities <- subset(cities, Population > 50000)
+#============================ queries to .csv function ========================= 
 
 
 # making a function to search through a bunch of city subcodes and print .csv
 # files for each query
-
-
-head(cities)
-
-
 
 
 # loop to create .csv for first half of gtrends queries
@@ -87,12 +21,11 @@ for(i in 1:(length(big.cities$name)/2)){
   # saving gtrends query to object
   list <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), 
                   category = 1236, onlyInterest = TRUE)
- 
-   obj <- list$interest_over_time
    
    # saving object to .csv
-   write.csv(obj, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
-                       ".csv", sep = ""))
+   write.csv(list$interest_over_time, paste(wd, "/data.output/", 
+                                            as.character(big.cities[i,1]), 
+                                            ".gtrends", ".csv", sep = ""))
   }  # end of loop
 
 
@@ -102,21 +35,38 @@ for(i in length(big.cities$name)/2+1:length(big.cities$name)){
   
   # saving gtrends query to object
   list <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), 
-                  category = 1236, onlyInterest = TRUE)
-  
-  obj <- list$interest_over_time
+                            category = 1236, onlyInterest = TRUE)
   
   # saving object to .csv
-  write.csv(obj, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
-                       ".csv", sep = ""))
-  }  # end of loop
+  write.csv(list$interest_over_time, paste(wd, "/data.output/", 
+                                           as.character(big.cities[i,1]), 
+                                           ".gtrends", ".csv", sep = ""))
+}  # end of loop
 
 
 
-# checking work
-file.exists(paste(wd, "/data/", deparse(substitute(se.us.over.1d)), ".csv", 
-                  sep = "")) %>%   
-  return()
+
+# checking presence of .csvs
+
+fcsv.check.gtrend <- function(){      # function definition
+csv.check <- rep(NA, 178)             # vector contains Boolean .csv presence
+for(i in 1:length(big.cities$name)){  # loop checks .csv presence for each city
+# populating vector w/ Boolean presence
+  csv.check[i] <- file.exists(paste(wd, "/data.output/",  
+                                  as.character(big.cities[i,1]), ".csv",
+                                  ".gtrends", sep = ""))
+}
+
+# which cities don't have a gtrends query .csv?
+return(big.cities$name[which(csv.check == FALSE)])
+}
+
+# Running the function - do any cities not have a gtrends query .csv?
+fcsv.check.gtrend()
+
+
+  
+
 
 
 
