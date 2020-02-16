@@ -19,20 +19,6 @@ gtrends("border collie", geo = "US", time = "now 1-H")
 gtrends(geo="US", time = "today 1-m", 
                     category = 886)
 
-#Create a vector containing a list of cities from the countries data frame
-cities.needed <- c("Birmingham, AL", "Anchorage, AK", "Phoenix, AZ", "Little Rock-Pine Bluff, AR",
-                   "Los Angeles, CA", "Denver, CO", "Hartford & New Haven, CT", 
-                   "Washington, DC (Hagerstown, MD)", "Jacksonville, FL", "Atlanta, GA", "Honolulu, HI", 
-                   "Boise, ID", "Chicago, IL", "Indianapolis, IN", "Des Moines-Ames, IA", "Baltimore, MD", 
-                   "Boston, MA-Manchester, NH", "Detroit, MI", "Minneapolis-St. Paul, MN", "Jackson, MS", 
-                   "Kansas City, MO", "Billings, MT", "Omaha, NE", "Las Vegas, NV", "Boston, MA-Manchester, NH", 
-                   "Albuquerque-Santa Fe, NM", "New York, NY", "Charlotte, NC", "US-ND-724", "Columbus, OH", 
-                   "Oklahoma City, OK", "Portland, OR", "Philadelphia, PA", "Providence, RI-New Bedford, MA", 
-                   "Charleston, SC", "Sioux Falls(Mitchell), SD", "Nashville, TN", "Houston, TX", 
-                   "Salt Lake City, UT", "Burlington, VT-Plattsburgh, NY", "Richmond-Petersburg, VA", 
-                   "Seattle-Tacoma, WA", "Charleston-Huntington, WV", "Milwaukee, WI", 
-                   "Cheyenne, WY-Scottsbluff, NE")
-
 length(cities.needed)
 
 #First interation of a functions
@@ -50,7 +36,8 @@ View(testing)
 i <- 1
 find.codes1 <- function(city.name){
   df1 <- data.frame(Country.Code = character(51), City.Name = character(51))
-  df1[i,] <- countries[which(countries$name == as.character(cities.needed$name[i])), c(2, 3)]
+  df1[i,] <- countries[which(countries$name == 
+                               as.character(cities.needed$name[i])), c(2, 3)]
 }
 
 testing <- find.codes1("Portland, OR")
@@ -66,7 +53,8 @@ find.codes1 <- function(cities.needed){
 
 # this makes an object with the name and subcode of a city and puts it into the 
 # ith row of the 1st and 2nd cols
-    obj <- countries[which(countries$name == as.character(cities.needed$name[i])), c(2, 3)]
+  obj <- countries[which(countries$name == 
+                           as.character(cities.needed$name[i])), c(2, 3)]
   df1[i,1] <- as.character(obj$sub_code)
   df1[i,2] <- as.character(obj$name)
 }
@@ -75,7 +63,8 @@ find.codes1 <- function(cities.needed){
 rm(df1)
 
 #playing with i
-test <- countries[which(countries$name == as.character(cities.needed$name[i])), c(2, 3)]
+test <- countries[which(countries$name == as.character(cities.needed$name[i])),
+                  c(2, 3)]
 
 testing <- find.codes1(cities.needed)
 View(testing)
@@ -87,7 +76,8 @@ rm(i)
 find.codes2 <- function(cities.needed){
   df1 <- data.frame(sub_code = rep(NA, 51), name = rep(NA, 51))
   for(i in length(cities.needed)){
-  obj <- countries[which(countries$name == as.character(cities.needed[i])), c(2, 3)]
+  obj <- countries[which(countries$name == as.character(cities.needed[i])), 
+                   c(2, 3)]
   df1[i,1] <- as.character(obj$sub_code)
   df1[i,2] <- as.character(obj$name)}}
 
@@ -114,14 +104,16 @@ i <- 1:51
 fff[i] <- cities.needed[i]
 print(fff)
 
-obj <- countries[which(countries$name == as.character(cities.needed[2])), c(2, 3)]
+obj <- countries[which(countries$name == as.character(cities.needed[2])), 
+                 c(2, 3)]
 
 
 #Trying to loop gain
 find.codes2 <- function(cities.needed){
   df1 <- data.frame(sub_code = rep(NA, 51), name = rep(NA, 51))
   for (i in cities.needed[1:length(cities.needed)]) {
-    obj <- countries[which(countries$name == as.character(cities.needed[i])), c(2, 3)]
+    obj <- countries[which(countries$name == as.character(cities.needed[i])), 
+                     c(2, 3)]
     df1[i,1] <- as.character(obj$sub_code)
     df1[i,2] <- as.character(obj$name)}}
 
@@ -157,7 +149,8 @@ for(i in 1:(length(cities.needed))){
 find.codes2 <- function(cities.needed){
   df <- NULL
   for(i in 1:(length(cities.needed))){
-    obj <- countries[which(countries$name == as.character(cities.needed[i])), c(2,3)]
+    obj <- countries[which(countries$name == as.character(cities.needed[i])), 
+                     c(2,3)]
     df1[i,1] <- as.character(obj$sub_code)
     df1[i,2] <- as.character(obj$name)}}
 
