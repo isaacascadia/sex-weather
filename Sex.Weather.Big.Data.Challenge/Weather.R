@@ -41,15 +41,23 @@ station.id <- paste(station$usaf[1],station$wban[1],sep="")
 #collect data from station 
 station.weather <- lcd(station.id, year=2017)
 
+station.weatherdata <- data.frame(date=station.weather$date, 
+                                  latitude=station.weather$latitude,
+                                  longitude=station.weather$longitude,
+                                  name=station.weather$name,
+                                  temperature= station.weather$hourlydrybulbtemperature,
+                                  source= station.weather$source)
+
 #file name
 filename <- paste(US.Cities$name[i], "weather.csv",sep=".")
 
 #create new dataset
-write.csv(station.weather, paste(path.data, paste(filename), sep=""),
+write.csv(station.weatherdata, paste(path.data, paste(filename), sep=""),
           row.names = FALSE)
 }
 
 #Quickly receiving HTTP 404 errors, deleting rows in the data set works
+
 
 #----Attempt 2------------------------------------------------------------------
 #Work around 1
@@ -84,5 +92,12 @@ for(i in 1:nrow(US.Cities)){
 
 #----Attempt 3------------------------------------------------------------------
 
- 
+
+
+
+
+
+
+
+
 
