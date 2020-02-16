@@ -175,5 +175,48 @@ sex.search("US-OR-820")
 #works
 
 
+#------------------------------Adapting Issac's code-----------------------
+
+for(i in 1:(length(cities$name)/2)){
+  list <- gtrends(geo = as.character(cities[i,3]), 
+                  category = 1236, onlyInterest = TRUE)
+  obj <- list$interest_over_time
+  write.csv(obj, paste(wd, "/data.output/", as.character(cities[i,1]), 
+                       ".csv", sep = ""))}
+
+
+
+for(i in (length(cities$name)/2):length(cities$name)){
+  list <- gtrends(geo = as.character(cities[i,3]), 
+                  category = 1236, onlyInterest = TRUE)
+  obj <- list$interest_over_time
+  write.csv(obj, paste(wd, "/data.output/", as.character(cities[i,1]), 
+                       ".csv", sep = ""))}
+
+
+#-------------removing the cities with the 9 smallest populations-------------
+
+a <- matrix(1:9, nrow=3)
+b <- subset(a, a[ , 3] < 9)
+
+big.cities <- subset(cities, Population > 50000)
+
+
+#rerunning Issac's code with big.cities
+for(i in 1:(length(big.cities$name)/2)){
+  list <- gtrends(geo = as.character(big.cities[i,3]), 
+                  category = 1236, onlyInterest = TRUE)
+  obj <- list$interest_over_time
+  write.csv(obj, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
+                       ".csv", sep = ""))}
+
+
+
+for(i in (length(big.cities$name)/2):length(big.cities$name)){
+  list <- gtrends(geo = as.character(big.cities[i,3]), 
+                  category = 1236, onlyInterest = TRUE)
+  obj <- list$interest_over_time
+  write.csv(obj, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
+                       ".csv", sep = ""))}
 
 
