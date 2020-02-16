@@ -1,3 +1,5 @@
+library(gtrendsR)
+
 # 
 # 
 # This script file contains code  for querying and saving gtrends data.
