@@ -216,3 +216,60 @@ gtrends(geo = "US-AL-630", time = "2014-01-01 2014-09-01", category = 1236,
         onlyInterest = TRUE)
 
 
+#------------------adjusting loop to run 6 month at a time--------------------
+
+for(i in 1:(length(big.cities$name)/2)){
+  list1 <- gtrends(geo = as.character(big.cities[i,3]), 
+                   category = 1236,
+                   time = "2018-01-01 2018-06-30",
+                   onlyInterest = TRUE)
+  list2 <- gtrends(geo = as.character(big.cities[i,3]), 
+                   category = 1236,
+                   time = "2018-07-01 2018-12-31",
+                   onlyInterest = TRUE)
+  iot <- rbind(list1$interest_over_time, list2$interest_over_time)
+  write.csv(iot, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
+                       ".gtrends", ".csv", sep = ""))
+  }
+
+
+
+for(i in (length(big.cities$name)/2):length(big.cities$name)){
+  list1 <- gtrends(geo = as.character(big.cities[i,3]), 
+                   category = 1236,
+                   time = "2018-01-01 2018-06-30",
+                   onlyInterest = TRUE)
+  list2 <- gtrends(geo = as.character(big.cities[i,3]), 
+                   category = 1236,
+                   time = "2018-07-01 2018-12-31",
+                   onlyInterest = TRUE)
+  iot <- rbind(list1$interest_over_time, list2$interest_over_time)
+  write.csv(iot, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
+                       ".gtrends", ".csv", sep = ""))
+  }
+
+
+
+
+
+
+  list1 <- gtrends(geo = as.character(big.cities[i,3]), 
+                   category = 1236,
+                   time = "2018-01-01 2018-06-30",
+                   onlyInterest = TRUE)
+  list2 <- gtrends(geo = as.character(big.cities[i,3]), 
+                   category = 1236,
+                   time = "2018-07-01 2018-12-31",
+                   onlyInterest = TRUE)
+  iot <- rbind(list1$interest_over_time, list2$interest_over_time)
+  write.csv(iot, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
+                       ".gtrends", ".csv", sep = ""))
+
+
+class(iot)  
+rm(iot)
+
+head(list1$interest_over_time)
+nrow(list1$interest_over_time)
+nrow(list2$interest_over_time)
+
