@@ -72,10 +72,10 @@ se <- categories$id[categories$name == "Sexual Enhancement"]
 #============================ 4. Run Custom Codes ==============================
 
 # # Run Saving.Search.Data script
-# source("saving.search.data.R")
+# source("2.saving.search.data.R")
 
 # # Run comparison script
-# source("comparison.R")
+# source("3.comparison.R")
 
 #============================ End of Main ======================================
 
