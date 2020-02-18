@@ -5,8 +5,8 @@
 # This file contains code that pertains to the following aspects of the 
 # sex-weather project:
 #
-# 1. File Management
-# 2. Libraries
+# 1. Libraries
+# 2. File Management
 # 3. Global Variables
 # 4. Run Custom Codes
 # 
@@ -72,10 +72,10 @@ se <- categories$id[categories$name == "Sexual Enhancement"]
 #============================ 4. Run Custom Codes ==============================
 
 # # Run Saving.Search.Data script
-# source("saving.search.data.R")
+# source("2.saving.search.data.R")
 
 # # Run comparison script
-# source("comparison.R")
+# source("3.comparison.R")
 
 #============================ End of Main ======================================
 
