@@ -20,12 +20,16 @@ download.gtrends.data <- function(){
   for(i in 1:(length(big.cities$name)/2)){
     
     # querying gtrends for first half of year and saving to object
-    first.6mo <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), category = 1236,
-                         time = "2018-01-01 2018-06-30", onlyInterest = TRUE)
+    first.6mo <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), 
+                                   category = 1236,
+                                   time = "2018-01-01 2018-06-30", 
+                                   onlyInterest = TRUE)
     
     # querying gtrends for second half of year and saving to object
-    second.6mo <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), category = 1236,
-                          time = "2018-07-01 2018-12-31", onlyInterest = TRUE)
+    second.6mo <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), 
+                                    category = 1236,
+                                    time = "2018-07-01 2018-12-31", 
+                                    onlyInterest = TRUE)
     
     # combining first and second half to get whole year interest over time 
     iot <- rbind(first.6mo$interest_over_time, second.6mo$interest_over_time)
@@ -40,12 +44,16 @@ download.gtrends.data <- function(){
   for(i in (length(big.cities$name)/2):length(big.cities$name)){
     
     # querying gtrends for first half of year and saving to object
-    first.6mo <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), category = 1236,
-                         time = "2018-01-01 2018-06-30", onlyInterest = TRUE)
+    first.6mo <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), 
+                                   category = 1236,
+                                   time = "2018-01-01 2018-06-30", 
+                                   onlyInterest = TRUE)
     
     # querying gtrends for second half of year and saving to object
-    second.6mo <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), category = 1236,
-                          time = "2018-07-01 2018-12-31", onlyInterest = TRUE)
+    second.6mo <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), 
+                                    category = 1236,
+                                    time = "2018-07-01 2018-12-31", 
+                                    onlyInterest = TRUE)
     
     # combining first and second half to get whole year interest over time 
     iot <- rbind(first.6mo$interest_over_time, second.6mo$interest_over_time)
@@ -157,7 +165,7 @@ download.weather.data <- function(){
 
 
 # execute the weather data download function
-download.gtrends.data()
+# download.weather.data()
 
 
 
