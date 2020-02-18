@@ -20,11 +20,11 @@ download.gtrends.data <- function(){
   for(i in 1:(length(big.cities$name)/2)){
     
     # querying gtrends for first half of year and saving to object
-    first.6mo <- gtrends(geo = as.character(big.cities[i,3]), category = 1236,
+    first.6mo <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), category = 1236,
                          time = "2018-01-01 2018-06-30", onlyInterest = TRUE)
     
     # querying gtrends for second half of year and saving to object
-    second.6mo <- gtrends(geo = as.character(big.cities[i,3]), category = 1236,
+    second.6mo <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), category = 1236,
                           time = "2018-07-01 2018-12-31", onlyInterest = TRUE)
     
     # combining first and second half to get whole year interest over time 
@@ -40,11 +40,11 @@ download.gtrends.data <- function(){
   for(i in (length(big.cities$name)/2):length(big.cities$name)){
     
     # querying gtrends for first half of year and saving to object
-    first.6mo <- gtrends(geo = as.character(big.cities[i,3]), category = 1236,
+    first.6mo <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), category = 1236,
                          time = "2018-01-01 2018-06-30", onlyInterest = TRUE)
     
     # querying gtrends for second half of year and saving to object
-    second.6mo <- gtrends(geo = as.character(big.cities[i,3]), category = 1236,
+    second.6mo <- gtrendsR::gtrends(geo = as.character(big.cities[i,3]), category = 1236,
                           time = "2018-07-01 2018-12-31", onlyInterest = TRUE)
     
     # combining first and second half to get whole year interest over time 
