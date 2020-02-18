@@ -59,7 +59,7 @@ download.gtrends.data <- function(){
     iot <- rbind(first.6mo$interest_over_time, second.6mo$interest_over_time)
     
     # saving combined interest over time to .csv
-    write.csv(iot, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
+    write.csv(iot, paste(path.data.raw, as.character(big.cities[i,1]), 
                          ".gtrends", ".csv", sep = ""))
   }  # end of loop
   
@@ -134,7 +134,7 @@ download.weather.data <- function(){
     filename <- paste(big.cities$name[i], "weather.csv", sep = ".")
     
     # save downloaded weather data to .csv
-    write.csv(station.weatherdata, paste(path.data, paste(filename), sep = ""),
+    write.csv(station.weatherdata, paste(path.data.raw, filename, sep = ""),
               row.names = FALSE)
     
   }  # end of weather data download loop

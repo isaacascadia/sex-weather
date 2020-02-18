@@ -1,12 +1,12 @@
 
 for(i in 1:length(big.cities$name)){
-  weath <- read.csv(paste(path.data, big.cities$name[i], ".weather.csv", 
+  weath <- read.csv(paste(path.data.raw, big.cities$name[i], ".weather.csv", 
                           sep = ""),
                     stringsAsFactors = FALSE, 
                     strip.white = TRUE, 
                     na.strings = c(NA, ""))
   
-  gtrend <- read.csv(paste(path.data, big.cities$name[i], ".gtrends.csv", 
+  gtrend <- read.csv(paste(path.data.raw, big.cities$name[i], ".gtrends.csv", 
                            sep = ""),
                      stringsAsFactors = FALSE, 
                      strip.white = TRUE, 
@@ -37,7 +37,12 @@ for(i in 1:length(big.cities$name)){
   
   
   
-  filename <- paste(big.cities$name[i], "comparison.pdf", sep = ".")
+  filename <- paste(big.cities$name[i], "comparison.csv", sep = ".")
+  
+  
+  # save table of compared gtrend and weather data to .csv
+  write.csv(gtrend.weath, paste(path.data.output, filename, sep = ""),
+            row.names = FALSE)
   
  
   # start saving of pdf

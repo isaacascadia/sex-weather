@@ -36,17 +36,22 @@ wd <- getwd()
 
 # folders for storing data outputs and figures
 # store names of the folders in an object
-output.folder.names <- c("figures", "data.output")
+output.folder.names <- c("data.raw", "data.output", "figures")
 # and make the folders if they don't exist yet. 
-for(i in 1:length(output.folder.names)) 
+for(i in 1:length(output.folder.names)){ 
   if(file.exists(output.folder.names[i]) == FALSE) 
     dir.create(output.folder.names[i])
+  }
 
-#path to figures folder
-path.figures <- paste(wd,"/",output.folder.names[1],"/", sep = "")
+# path to raw data folder
+path.data.raw <- paste(wd,"/",output.folder.names[1],"/", sep = "")
 
-#path to data folder
-path.data <- paste(wd,"/",output.folder.names[2],"/", sep = "")
+# path to data output folder
+path.data.output <- paste(wd,"/",output.folder.names[2],"/", sep = "")
+
+# path to figures folder
+path.figures <- paste(wd,"/",output.folder.names[3],"/", sep = "")
+
 
 #===== 3. Global Variables =====================================================
 
