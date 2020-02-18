@@ -5,8 +5,8 @@
 # This file contains code that pertains to the following aspects of the 
 # sex-weather project:
 #
-# 1. File Management
-# 2. Libraries
+# 1. Libraries
+# 2. File Management
 # 3. Global Variables
 # 4. Run Custom Codes
 # 
