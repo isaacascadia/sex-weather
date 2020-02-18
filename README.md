@@ -7,3 +7,5 @@ This file should be on decending order by population!
 Numbered files are main files and are stored as *#*.*file topic*.R. We have 3 main files.
 
 Lettered files are "show your work" files ans are stored as *letter*.*file topic*.R. We have 3 letted files
+
+Run 1.main.R from start to finish and it will automatically run the second and third main files
