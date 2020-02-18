@@ -31,8 +31,9 @@ for(i in 1:length(big.cities$name)){
 
   
   # combine gtrends and weather data by day of year
-  gtrend.weath <- data.frame("date" = dates, "gtrend.hits" = gtrend$hits,
-                             temperature = daily.temp)
+  gtrend.weath <- data.frame("date" = dates, 
+                             "gtrend.hits" = gtrend$hits[1:length(dates)],
+                             "temperature" = daily.temp[1:length(dates)])
   
   
   
@@ -45,7 +46,8 @@ for(i in 1:length(big.cities$name)){
 
   plot(gtrend.weath$gtrend.hits[gtrend.weath$gtrend.hits > 0] ~ 
          gtrend.weath$temperature[gtrend.weath$gtrend.hits > 0],
-       xlab = "Temperature", ylab = "Hits", las = 1,
+       xlab = "Temperature (F)", ylab = "Hits", las = 1,
+       xlim = c(0, 110),
        main = "Google Searches for Sexual Enhancement")
   
   # stop saving 
