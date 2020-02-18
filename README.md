@@ -2,7 +2,7 @@
 Comparing Google search trends for "sexual enhancement" to fluctuations in weather. This repository contains R scripts, data, and figures for a Data Analysis in R course project.
 
 Cities.csv contains a list of American cities with data in both the GtrendsR and the rnoaa data packages.
-Cities list should be ordered!
+This file should be on decending order by population!
 
 Numbered files are main files and are stored as *#*.*file topic*.R. We have 3 main files.
 
