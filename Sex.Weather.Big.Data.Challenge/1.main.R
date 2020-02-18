@@ -1,6 +1,6 @@
   # 
   # 
-  #==== General ==================================================================
+  #===== General ================================================================
 # 
 # This file contains code that pertains to the following aspects of the 
 # sex-weather project:
