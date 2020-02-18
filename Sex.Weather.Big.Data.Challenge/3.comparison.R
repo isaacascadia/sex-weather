@@ -50,6 +50,10 @@ for(i in 1:length(big.cities$name)){
        xlim = c(0, 110),
        main = "Google Searches for Sexual Enhancement")
   
+  abline(lm(gtrend.weath$gtrend.hits[gtrend.weath$gtrend.hits > 0] ~ 
+            gtrend.weath$temperature[gtrend.weath$gtrend.hits > 0]), 
+            xlim = c(0, 110), col = "red")
+  
   # stop saving 
   dev.off()
   
