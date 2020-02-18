@@ -20,7 +20,7 @@ for(i in 1:length(big.cities$name)){
   dates <- unique(weath$ymd)
   
   
-  # this loop creates a vector with the mean temperature for each day of the year
+  # this loop creates a vector with the mean temperature for each day of year
   daily.temp <- rep(NA, 365)
   for(y in 1:length(unique(weath$ymd))){
     
@@ -45,14 +45,13 @@ for(i in 1:length(big.cities$name)){
 
   plot(gtrend.weath$gtrend.hits[gtrend.weath$gtrend.hits > 0] ~ 
          gtrend.weath$temperature[gtrend.weath$gtrend.hits > 0],
-       xlab = "Temperature", ylab = "Hits", 
+       xlab = "Temperature", ylab = "Hits", las = 1,
        main = "Google Searches for Sexual Enhancement")
   
   # stop saving 
   dev.off()
   
 
-  
 }  # end of comparison loop
 
 
