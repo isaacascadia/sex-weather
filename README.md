@@ -5,4 +5,6 @@ This repository contains R scripts, data, and figures for a Data Analysis in R c
 
 Cities list should be ordered!
 
-Main files are stored as *#*.*file topic*.R. We have 3 main files.
+Numbered files are main files and are stored as *#*.*file topic*.R. We have 3 main files.
+
+Lettered files are "show your work" files ans are stored as *letter*.*file topic*.R. We have 3 letted files
