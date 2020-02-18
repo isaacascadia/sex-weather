@@ -61,7 +61,7 @@ download.gtrends.data <- function(){
   
   # checking presence of gtrend .csvs
   
-  fcsv.check.gtrend <- function(){      # function definition
+  fcsv.check.gtrend <- function(){        # function definition
     csv.check <- rep(NA, 178)             # vector: Boolean .csv presence
     for(i in 1:length(big.cities$name)){  # loop checks .csvs for all cities
       # populating vector w/ Boolean presence
@@ -129,7 +129,7 @@ download.weather.data <- function(){
     write.csv(station.weatherdata, paste(path.data, paste(filename), sep = ""),
               row.names = FALSE)
     
-  }  # fin
+  }  # end of weather data download loop
   
   
   
