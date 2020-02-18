@@ -1,11 +1,11 @@
 weather.wd <- getwd()
 
 #install libraries
-install.packages("rnoaa")
-library("rnoaa")
+# install.packages("rnoaa")
+# library("rnoaa")
 
 
-#Import needed dataset
+# Import dataset with city names and latitude/longitude 
 US.Cities <- read.csv("cities.csv", na.strings = "")
 
 # 
@@ -133,37 +133,39 @@ US.Cities <- read.csv("cities.csv", na.strings = "")
 #Attempt 3 was very close
 
 for(i in 1:nrow(US.Cities)){
-  #Look up city 
-  station <- isd_stations_search(lat=US.Cities$lat[i], lon = US.Cities$lng[i])
+  # look up stations within a city 
+  station <- isd_stations_search(lat = US.Cities$lat[i], lon = US.Cities$lng[i])
   
-  #a sub for loop to run through the different stations
-for(y in 1:nrow(station)) {
-  #find city station 
-  station.id <- paste(station$usaf[y],station$wban[y],sep="")
-  #collect data from station 
-  station.weather <- try(lcd(station.id, year=2017), silent = TRUE)
-  #when station.weather is a list (not an error) move on
-  if(typeof(station.weather)==typeof(US.Cities)){
-    break
-  }
-} 
+  # a sub for loop to run through the different stations within each city
+  # looks until it finds one that's available
+  for(y in 1:nrow(station)) {
+    #find city station 
+    station.id <- paste(station$usaf[y],station$wban[y],sep = "")
+    #collect data from station 
+    station.weather <- try(lcd(station.id, year = 2017), silent = TRUE)
+    #when station.weather is a list (not an error) move on
+    if(typeof(station.weather) == typeof(US.Cities)){
+      break
+      }  # end of if statement
+    }    # end of station-checking sub-lopp
 
-#specify the data that we want in the new data set
-station.weatherdata <- 
-  data.frame(date=station.weather$date, 
-                                  latitude=station.weather$latitude,
-                                  longitude=station.weather$longitude,
-                                  name=station.weather$name,
-                                  temperature= station.weather$hourlydrybulbtemperature,
-                                  source= station.weather$source)
+# specify the data that we want to download for the station
+  station.weatherdata <- 
+    data.frame(date=station.weather$date, 
+               latitude = station.weather$latitude,
+               longitude = station.weather$longitude,
+               name = station.weather$name,
+               temperature = station.weather$hourlydrybulbtemperature,
+               source = station.weather$source)
 
-#file name
-filename <- paste(US.Cities$name[i], "weather.csv",sep=".")
+# define file name
+  filename <- paste(US.Cities$name[i], "weather.csv", sep = ".")
 
-#create new dataset
-write.csv(station.weatherdata, paste(path.data, paste(filename), sep=""),
-          row.names = FALSE)
-}
+# save downloaded weather data to .csv
+  write.csv(station.weatherdata, paste(path.data, paste(filename), sep = ""),
+            row.names = FALSE)
+
+}  # end loop
 
 
 

@@ -1,4 +1,7 @@
-df <- read.csv(paste(path.data,"Albany, NY.weather.csv", sep = ""))
+df <- read.csv(paste(path.data,"Albany, NY.weather.csv", sep = ""),
+               stringsAsFactors = FALSE, 
+               strip.white = TRUE, 
+               na.strings = c(NA, ""))
 
 #remove blank values
 df <- df[!(df$temperature== ""), ]

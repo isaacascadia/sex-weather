@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-wd <- getwd()
-=======
 # 
 # 
 #==== General ==================================================================
@@ -26,7 +23,7 @@ sessionInfo()  # for more info
 library(rnoaa)
 library(gtrendsR)
 library(dplyr)
->>>>>>> e9f4280892beea952e7695cc98f0b4713d4a1bcc
+
 
 # if you don't have the library yet, install it! Either through the 'Tools' menu
 # or install.packages("name of package")
@@ -46,15 +43,16 @@ for(i in 1:length(output.folder.names))
   if(file.exists(output.folder.names[i]) == FALSE) 
     dir.create(output.folder.names[i])
 
+#path to figures folder
+path.figures <- paste(wd,"/",output.folder.names[1],"/", sep = "")
+
 #path to data folder
 path.data <- paste(wd,"/",output.folder.names[2],"/", sep = "")
 
-<<<<<<< HEAD
 #Example of posting to the datafolder
 write.csv(output.folder.names, paste(path.data, "uselessnames.csv"),
           row.names = FALSE)
-=======
->>>>>>> e9f4280892beea952e7695cc98f0b4713d4a1bcc
+
 
 #===== 3. Global Variables =====================================================
 
