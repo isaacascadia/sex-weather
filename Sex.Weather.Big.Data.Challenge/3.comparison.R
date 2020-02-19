@@ -1,4 +1,4 @@
-
+#Create a loop that combinds our weather and search data for each city
 for(i in 1:length(big.cities$name)){
   weath <- read.csv(paste(path.data.raw, big.cities$name[i], ".weather.csv", 
                           sep = ""),
@@ -13,7 +13,7 @@ for(i in 1:length(big.cities$name)){
                      na.strings = c(NA, ""))
   
   
-  # reducing date and time to just date for weather data
+  #Reduce weather data from multiple observations a day to one average reading per day
   weath$ymd <- substr(weath$date, 1, 10)
   
   # names for each day of the year in weather dataset
@@ -81,7 +81,7 @@ for(i in 1:length(big.cities$name)){
 #                   na.strings = c(NA, ""))
 
 
-
+ #Create a loop that reads our CSV's for each city and runs analysis on it
  for(i in 1:nrow(big.cities)){
    df <-read.csv(paste(path.data.output, big.cities$name[i], ".comparison.csv", 
                        sep = ""),
