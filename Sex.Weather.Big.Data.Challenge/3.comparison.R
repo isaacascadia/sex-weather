@@ -44,28 +44,62 @@ for(i in 1:length(big.cities$name)){
   write.csv(gtrend.weath, paste(path.data.output, filename, sep = ""),
             row.names = FALSE)
   
- 
-  # start saving of pdf
-  pdf(paste(path.figures, paste(filename), sep = ""), 
-      width = 5, height = 5)
 
-  plot(gtrend.weath$gtrend.hits[gtrend.weath$gtrend.hits > 0] ~ 
-         gtrend.weath$temperature[gtrend.weath$gtrend.hits > 0],
-       xlab = "Temperature (F)", ylab = "Hits", las = 1,
-       xlim = c(0, 110),
-       main = "Google Searches for Sexual Enhancement")
-  
-  
-  abline(lm(gtrend.weath$gtrend.hits[gtrend.weath$gtrend.hits > 0] ~ 
-              gtrend.weath$temperature[gtrend.weath$gtrend.hits > 0]), 
-         xlim = c(0, 110), col = "red")
-  
-  # stop saving 
-  dev.off()
   
 
 }  # end of comparison loop
+# 
+# 
+#
+# 
+# 
+# # start saving of pdf
+# pdf(paste(path.figures, paste(filename), sep = ""), 
+#     width = 5, height = 5)
+# 
+# plot(gtrend.weath$gtrend.hits[gtrend.weath$gtrend.hits > 0] ~ 
+#        gtrend.weath$temperature[gtrend.weath$gtrend.hits > 0],
+#      xlab = "Temperature (F)", ylab = "Hits", las = 1,
+#      xlim = c(0, 110),
+#      main = "Google Searches for Sexual Enhancement")
+# 
+# 
+# abline(lm(gtrend.weath$gtrend.hits[gtrend.weath$gtrend.hits > 0] ~ 
+#             gtrend.weath$temperature[gtrend.weath$gtrend.hits > 0]), 
+#        xlim = c(0, 110), col = "red")
+# 
+# # stop saving 
+# dev.off()
+# 
+# 
+# 
+# 
+# df <-read.csv(paste(path.data.output, big.cities$name[i], ".comparison.csv", 
+#                         sep = ""),
+#                   stringsAsFactors = FALSE, 
+#                   strip.white = TRUE, 
+#                   na.strings = c(NA, ""))
 
 
 
+ for(i in 1:nrow(big.cities)){
+   df <-read.csv(paste(path.data.output, big.cities$name[i], ".comparison.csv", 
+                       sep = ""),
+                 stringsAsFactors = FALSE, 
+                 strip.white = TRUE, 
+                 na.strings = c(NA, ""))
+  #run linear model
+  modelobject <- lm(df$temperature[!is.na(df$temperature)]~ 
+                      df$gtrend.hits[1:length(df$temperature[!is.na(df$temperature)])])
+  
+  if (class(modelobject) != "lm") stop("Not an object of class 'lm' ")
+  #find f statistic
+  f <- summary(modelobject)$fstatistic
+  #find p statistic
+  p <- pf(f[1],f[2],f[3],lower.tail=F)
+  attributes(p) <- NULL
+  #print p
+  big.cities$pvalue[i] <- (p)
+}
+sort(big.cities$pvalue)
 
