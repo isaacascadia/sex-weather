@@ -147,7 +147,7 @@ download.weather.data <- function(){
     csv.check <- rep(NA, 178)           # vector contains Boolean .csv presence
     for(i in 1:length(big.cities$name)){  # loop checks .csv presence for cities
       # populating vector w/ Boolean presence
-      csv.check[i] <- file.exists(paste(wd, "/data.output/",  
+      csv.check[i] <- file.exists(paste(path.data.raw,  
                                         as.character(big.cities[i,1]), 
                                         ".weather", ".csv", sep = ""))
     }
