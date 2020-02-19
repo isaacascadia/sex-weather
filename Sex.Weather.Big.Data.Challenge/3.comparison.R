@@ -96,5 +96,6 @@ for(i in 1:nrow(big.cities)){
   big.cities$pvalue[i] <- (p)
   #big sorting big.cities by p value, you can see Redding is significant!
 }
-
-
+#print Big.Cities results
+write.csv(gtrend.weath, paste(path.data.output,"1.Cities.Results", sep = ""),
+          row.names = FALSE)
