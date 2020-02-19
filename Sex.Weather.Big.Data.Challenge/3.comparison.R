@@ -1,4 +1,4 @@
-#Create a loop that combinds our weather and search data for each city
+#comparison loop
 for(i in 1:length(big.cities$name)){
   weath <- read.csv(paste(path.data.raw, big.cities$name[i], ".weather.csv", 
                           sep = ""),
@@ -13,7 +13,7 @@ for(i in 1:length(big.cities$name)){
                      na.strings = c(NA, ""))
   
   
-  #Reduce weather data from multiple observations a day to one average reading per day
+  # reducing date and time to just date for weather data
   weath$ymd <- substr(weath$date, 1, 10)
   
   # names for each day of the year in weather dataset
@@ -28,7 +28,7 @@ for(i in 1:length(big.cities$name)){
                           na.rm = TRUE)
     
   }  # end of daily temperature loop
-
+  
   
   # combine gtrends and weather data by day of year
   gtrend.weath <- data.frame("date" = dates, 
@@ -38,60 +38,54 @@ for(i in 1:length(big.cities$name)){
   
   
   filename <- paste(big.cities$name[i], "comparison.csv", sep = ".")
-  
+  pdfname <- paste(big.cities$name[i], "comparison.pdf", sep = ".")
   
   # save table of compared gtrend and weather data to .csv
   write.csv(gtrend.weath, paste(path.data.output, filename, sep = ""),
             row.names = FALSE)
   
-
   
+  # start saving of pdf
+  pdf(paste(path.figures, paste(pdfname), sep = ""),
+      width = 5, height = 5)
+  #
+  plot(gtrend.weath$gtrend.hits[gtrend.weath$gtrend.hits > 0] ~
+         gtrend.weath$temperature[gtrend.weath$gtrend.hits > 0],
+       xlab = "Temperature (F)", ylab = "Hits", las = 1,
+       xlim = c(0, 110),
+       main = "Google Searches for Sexual Enhancement")
+  #
+  #
+  abline(lm(gtrend.weath$gtrend.hits[gtrend.weath$gtrend.hits > 0] ~
+              gtrend.weath$temperature[gtrend.weath$gtrend.hits > 0]),
+         xlim = c(0, 110), col = "red")
+  #
+  # stop saving
+  dev.off()
+  #
+  #
+  #
+  #
+  df <-read.csv(paste(path.data.output, big.cities$name[i], ".comparison.csv",
+                      sep = ""),
+                stringsAsFactors = FALSE,
+                strip.white = TRUE,
+                na.strings = c(NA, ""))
+} # end comparison loop
 
-}  # end of comparison loop
-# 
-# 
-#
-# 
-# 
-# # start saving of pdf
-# pdf(paste(path.figures, paste(filename), sep = ""), 
-#     width = 5, height = 5)
-# 
-# plot(gtrend.weath$gtrend.hits[gtrend.weath$gtrend.hits > 0] ~ 
-#        gtrend.weath$temperature[gtrend.weath$gtrend.hits > 0],
-#      xlab = "Temperature (F)", ylab = "Hits", las = 1,
-#      xlim = c(0, 110),
-#      main = "Google Searches for Sexual Enhancement")
-# 
-# 
-# abline(lm(gtrend.weath$gtrend.hits[gtrend.weath$gtrend.hits > 0] ~ 
-#             gtrend.weath$temperature[gtrend.weath$gtrend.hits > 0]), 
-#        xlim = c(0, 110), col = "red")
-# 
-# # stop saving 
-# dev.off()
-# 
-# 
-# 
-# 
-# df <-read.csv(paste(path.data.output, big.cities$name[i], ".comparison.csv", 
-#                         sep = ""),
-#                   stringsAsFactors = FALSE, 
-#                   strip.white = TRUE, 
-#                   na.strings = c(NA, ""))
-
-
- #Create a loop that reads our CSV's for each city and runs analysis on it
- for(i in 1:nrow(big.cities)){
-   df <-read.csv(paste(path.data.output, big.cities$name[i], ".comparison.csv", 
-                       sep = ""),
-                 stringsAsFactors = FALSE, 
-                 strip.white = TRUE, 
-                 na.strings = c(NA, ""))
+#loop for p values
+for(i in 1:nrow(big.cities)){
+  df <-read.csv(paste(path.data.output, big.cities$name[i], ".comparison.csv", 
+                      sep = ""),
+                stringsAsFactors = FALSE, 
+                strip.white = TRUE, 
+                na.strings = c(NA, ""))
   #run linear model
   modelobject <- lm(df$temperature[!is.na(df$temperature)]~ 
-                      df$gtrend.hits[1:length(df$temperature[!is.na(df$temperature)])])
-  
+                      df$gtrend.hits[1:length(df$temperature
+                                              [!is.na(df$temperature)])])
+  lmsummary <- summary(modelobject)
+  big.cities$r2value[i] <- lmsummary$r.squared
   if (class(modelobject) != "lm") stop("Not an object of class 'lm' ")
   #find f statistic
   f <- summary(modelobject)$fstatistic
