@@ -67,7 +67,7 @@ download.gtrends.data <- function(){
   
   
   
-  # checking presence of gtrend .csvs
+  # checking presence of gtrend .csv
   
   fcsv.check.gtrend <- function(){        # function definition
     csv.check <- rep(NA, 178)             # vector: Boolean .csv presence
