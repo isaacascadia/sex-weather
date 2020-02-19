@@ -35,7 +35,7 @@ download.gtrends.data <- function(){
     iot <- rbind(first.6mo$interest_over_time, second.6mo$interest_over_time)
     
     # saving combined interest over time to .csv
-    write.csv(iot, paste(wd, "/data.output/", as.character(big.cities[i,1]), 
+    write.csv(iot, paste(path.data.raw, as.character(big.cities[i,1]), 
                          ".gtrends", ".csv", sep = ""))
   }  # end of loop
   
@@ -73,7 +73,7 @@ download.gtrends.data <- function(){
     csv.check <- rep(NA, 178)             # vector: Boolean .csv presence
     for(i in 1:length(big.cities$name)){  # loop checks .csvs for all cities
       # populating vector w/ Boolean presence
-      csv.check[i] <- file.exists(paste(wd, "/data.output/",  
+      csv.check[i] <- file.exists(paste(path.data.raw,  
                                         as.character(big.cities[i,1]), 
                                         ".gtrends", ".csv", sep = ""))
     }
@@ -165,7 +165,7 @@ download.weather.data <- function(){
 
 
 # execute the weather data download function
-# download.weather.data()
+download.weather.data()
 
 
 
