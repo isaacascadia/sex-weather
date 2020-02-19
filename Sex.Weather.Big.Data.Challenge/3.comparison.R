@@ -98,8 +98,9 @@ for(i in 1:length(big.cities$name)){
   #find p statistic
   p <- pf(f[1],f[2],f[3],lower.tail=F)
   attributes(p) <- NULL
-  #print p
+  #print p values onto big cities
   big.cities$pvalue[i] <- (p)
+  #big sorting big.cities by p value, you can see Redding is significant!
 }
-sort(big.cities$pvalue)
+
 
